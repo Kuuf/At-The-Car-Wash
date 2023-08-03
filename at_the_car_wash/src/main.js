@@ -5,16 +5,37 @@
  */
 
 // Components
-import App from './App.vue'
+import App from "./App.vue";
 
 // Composables
-import { createApp } from 'vue'
+import { createApp } from "vue";
+import { createStore } from "vuex";
+
+// Create a new store instance.
+const store = createStore({
+  state() {
+    return {
+      count: 0,
+    };
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    },
+  },
+  getters: {
+    getCount(state) {
+      return state.count;
+    },
+  },
+});
 
 // Plugins
-import { registerPlugins } from '@/plugins'
+import { registerPlugins } from "@/plugins";
 
-const app = createApp(App)
+const app = createApp(App);
+app.use(store);
 
-registerPlugins(app)
+registerPlugins(app);
 
-app.mount('#app')
+app.mount("#app");

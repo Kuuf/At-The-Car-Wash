@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <AppBar />
-    <v-content class="app">
+    <div class="app">
       <router-view />
-    </v-content>
+    </div>
   </v-app>
 </template>
 

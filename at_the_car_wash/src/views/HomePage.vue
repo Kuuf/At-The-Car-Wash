@@ -1,18 +1,9 @@
 <template>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
-  <div>Hello World</div>
+  <v-container>
+    <CustomerFinder />
+  </v-container>
 </template>
 
 <script setup>
-//
+import CustomerFinder from "@/components/CustomerFinder.vue";
 </script>
