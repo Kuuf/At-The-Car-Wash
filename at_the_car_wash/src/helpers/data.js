@@ -16,6 +16,18 @@ export default {
     getCustomerCarWashPurchaseHistory(id) {
       return this.getCustomerObject(id).purchaseHistory;
     },
+    editCustomerInfo(id, info) {
+      console.log("editCustomerInfo", id, info);
+    },
+    addCustomerSubscription(id, subscription) {
+      console.log("addCustomerSubscription", id, subscription);
+    },
+    removeCustomerSubscription(id, subscription) {
+      console.log("removeCustomerSubscription", id, subscription);
+    },
+    transferCustomerSubscription(id, subscription) {
+      console.log("transferCustomerSubscription", id, subscription);
+    },
   },
 
   data: {
@@ -33,6 +45,8 @@ export default {
         info: {
           id: 1,
           name: "John Doe",
+          email: "john@gmail.com",
+          phone: "123-456-7890",
           address: "1234 Main St",
           city: "Anytown",
           state: "CA",
@@ -66,6 +80,8 @@ export default {
       {
         info: {
           id: 2,
+          email: "jane@gmail.com",
+          phone: "123-456-7890",
           name: "Jane Doe",
           address: "5678 Apple St",
           city: "Normaltown",
@@ -100,6 +116,8 @@ export default {
       {
         info: {
           id: 3,
+          email: "george@gmail.com",
+          phone: "123-456-7890",
           name: "George Doe",
           address: "9012 Golden Rd",
           city: "Augusta",
