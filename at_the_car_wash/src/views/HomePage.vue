@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row no-gutters>
       <v-col v-show="showCustomerList" sm="6">
         <CustomerFinder
           @customer-selected="customerSelected"

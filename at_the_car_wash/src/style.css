@@ -1,4 +1,16 @@
 .simple-border-container {
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding: 16px;
+}
+
+.overflow-ellipsis {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bold {
+  font-weight: 500;
 }

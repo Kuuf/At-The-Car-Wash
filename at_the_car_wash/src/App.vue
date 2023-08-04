@@ -14,6 +14,6 @@ import AppBar from "./components/AppBar.vue";
 <style scoped>
 .app {
   padding-top: 60px;
-  background: white;
+  background: rgb(255, 255, 255);
 }
 </style>

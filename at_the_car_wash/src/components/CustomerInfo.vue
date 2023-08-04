@@ -1,5 +1,5 @@
 <template>
-  <v-container class="simple-border-container pb-6 pa-5">
+  <div :class="[isMobile ? '' : 'simple-border-container', 'pb-6']">
     <v-row v-if="isMobile">
       <v-btn
         v-show="customerSelected"
@@ -8,9 +8,9 @@
         @click="goBack()"
       />
     </v-row>
-    <v-row align="center">
+    <v-row align="center" class="overflow-scroll">
       <div
-        :class="['text-h5 pl-3', !customerSelected && !isMobile ? 'pt-2' : '']"
+        :class="['text-h7 pl-3', !customerSelected && !isMobile ? 'pt-2' : '']"
       >
         Customer Info
       </div>
@@ -30,11 +30,19 @@
       >
       </v-btn>
     </v-row>
-
-    <div class="mt-4" v-show="customerSelected">
-      {{ customerInfo }}
+    <div class="mt-4 overflow-scroll">
+      <div
+        v-show="customerSelected"
+        v-for="item in [1, 2, 3, 4, 5, 6, 7]"
+        :key="item"
+      >
+        {{ customerInfo }}
+      </div>
+      <div v-show="!customerSelected">
+        <v-img src="@/assets/no_customer_selected.png"> </v-img>
+      </div>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -77,6 +85,10 @@ export default {
       this.customerInfo = this.getCustomerInfo(this.customerID);
     },
     goBack() {
+      if (this.fullscreen) {
+        this.$emit("toggleFullScreen");
+      }
+      this.fullscreen = false;
       this.$emit("closeCustomerInfo");
     },
     toggleFullScreen() {
@@ -95,4 +107,9 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.overflow-scroll {
+  overflow-y: auto;
+  max-height: calc(100vh - 179px);
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
-  <v-container class="table">
-    <div class="pl-3 text-h5">Customer Search</div>
-    <v-row class="pl-3 mt-1">
+  <div :class="[isMobile ? '' : 'simple-border-container']">
+    <div class="text-h7">Customer Search</div>
+    <v-row>
       <v-col sm="6">
         <v-text-field
           v-model="search"
@@ -10,6 +10,7 @@
           variant="outlined"
           class="mt-2"
           @keyup="searchCustomers"
+          @change="searchCustomers"
         ></v-text-field>
       </v-col>
       <v-col sm="6">
@@ -24,50 +25,30 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-table>
-      <thead>
-        <th
-          v-for="header in headers"
-          :key="header"
-          class="text-left table-header pt-2 pb-2 text-body-1"
-        >
-          {{ header.text }}
-        </th>
-      </thead>
-
+    <v-table class="overflow-scroll">
       <tbody>
-        <tr
+        <div
           v-for="customer in customers"
           :key="customer.id"
           class="customer-row"
           @click="selectCustomer(customer.id)"
         >
-          <td
-            v-for="header in headers"
-            :key="header"
-            class="text-left table-data pt-6 pb-6 text-body-1"
-          >
-            {{ customer[header.value] }}
-          </td>
-          <td>
-            <v-btn
-              flat
-              icon="mdi-pencil"
-              @click="selectCustomer((editButtonPressed = true))"
-            >
-            </v-btn>
-          </td>
-        </tr>
+          <CustomerInfoCard :customerInfo="customer" :headers="headers" />
+        </div>
       </tbody>
     </v-table>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import functions from "@/helpers/functions";
+import CustomerInfoCard from "./CustomerInfoCard.vue";
 import { mapGetters } from "vuex";
 
 export default {
+  components: {
+    CustomerInfoCard,
+  },
   props: {
     isMobile: {
       type: Boolean,
@@ -123,7 +104,11 @@ export default {
     },
   },
 
-  watch: {},
+  watch: {
+    searchBy() {
+      this.searchCustomers();
+    },
+  },
 };
 </script>
 <style scoped>
@@ -134,8 +119,8 @@ export default {
   background-color: #f8f8f8;
   cursor: pointer;
 }
-.table {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.overflow-scroll {
+  overflow-y: auto;
+  max-height: calc(100vh - 240px);
 }
 </style>
