@@ -77,83 +77,22 @@ const store = new Vuex.Store({
               city: "Anytown",
               state: "CA",
             },
+            vehicles: [
+              {
+                id: 1,
+                make: "Honda",
+                model: "Civic",
+                year: 2015,
+                color: "Black",
+                licensePlate: "ABC123",
+              },
+            ],
             subscriptions: [
               {
                 id: 1,
                 name: "Gold Membership",
                 price: 12.99,
-              },
-            ],
-            purchaseHistory: [
-              {
-                id: 1,
-                name: "Wash",
-                price: 19.99,
-              },
-              {
-                id: 2,
-                name: "Wax & Wash",
-                price: 29.99,
-              },
-              {
-                id: 1,
-                name: "Wax",
-                price: 19.99,
-              },
-            ],
-          },
-          // Jane Doe
-          {
-            info: {
-              id: 2,
-              email: "jane@gmail.com",
-              phone: "123-456-7890",
-              name: "Jane Doe",
-              address: "5678 Apple St",
-              city: "Normaltown",
-              state: "WY",
-            },
-            subscriptions: [
-              {
-                id: 2,
-                name: "Bronze Membership",
-                price: 6.99,
-              },
-            ],
-            purchaseHistory: [
-              {
-                id: 1,
-                name: "Wash",
-                price: 19.99,
-              },
-              {
-                id: 2,
-                name: "Wax & Wash",
-                price: 29.99,
-              },
-              {
-                id: 1,
-                name: "Wax",
-                price: 19.99,
-              },
-            ],
-          },
-          // George Doe
-          {
-            info: {
-              id: 3,
-              email: "george@gmail.com",
-              phone: "123-456-7890",
-              name: "George Doe",
-              address: "9012 Golden Rd",
-              city: "Augusta",
-              state: "GA",
-            },
-            subscriptions: [
-              {
-                id: 3,
-                name: "Diamond Membership",
-                price: 59.99,
+                vehicle: 1,
               },
             ],
             purchaseHistory: [
