@@ -16,6 +16,7 @@ import "./style.css";
 const store = createStore({
   state() {
     return {
+      mobileThreshold: 600,
       count: 0,
       customers: [
         // John Doe
@@ -205,13 +206,16 @@ const store = createStore({
       return state.customers.find((customer) => customer.info.id === id);
     },
     getCustomerInfo: (state, getters) => (id) => {
-      return getters.getCustomerObject(id).info;
+      return getters.getCustomerObject(id);
     },
     getCustomerSubscriptionsInfo: (state, getters) => (id) => {
       return getters.getCustomerObject(id).subscriptions;
     },
     getCustomerCarWashPurchaseHistory: (state, getters) => (id) => {
       return getters.getCustomerObject(id).purchaseHistory;
+    },
+    getMobileThreshold(state) {
+      return state.mobileThreshold;
     },
   },
 });

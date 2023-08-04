@@ -1,8 +1,8 @@
 <template>
   <v-container class="table">
-    <div class="pl-3">Customer Search</div>
+    <div class="pl-3 text-h5">Customer Search</div>
     <v-row class="pl-3 mt-1">
-      <v-col sm="6" md="3">
+      <v-col sm="6">
         <v-text-field
           v-model="search"
           label="Search"
@@ -12,7 +12,7 @@
           @keyup="searchCustomers"
         ></v-text-field>
       </v-col>
-      <v-col sm="6" md="3">
+      <v-col sm="6">
         <v-select
           v-model="searchBy"
           label="Search By"
@@ -29,7 +29,7 @@
         <th
           v-for="header in headers"
           :key="header"
-          class="text-left table-header pt-2 pb-2"
+          class="text-left table-header pt-2 pb-2 text-body-1"
         >
           {{ header.text }}
         </th>
@@ -45,7 +45,7 @@
           <td
             v-for="header in headers"
             :key="header"
-            class="text-left table-data pt-6 pb-6"
+            class="text-left table-data pt-6 pb-6 text-body-1"
           >
             {{ customer[header.value] }}
           </td>
@@ -68,7 +68,12 @@ import functions from "@/helpers/functions";
 import { mapGetters } from "vuex";
 
 export default {
-  props: {},
+  props: {
+    isMobile: {
+      type: Boolean,
+      required: true,
+    },
+  },
   mixins: [functions],
   data() {
     return {

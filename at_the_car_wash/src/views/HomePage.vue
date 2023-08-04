@@ -1,11 +1,19 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-show="showCustomerList">
-        <CustomerFinder />
+      <v-col v-show="showCustomerList" sm="6">
+        <CustomerFinder
+          @customer-selected="customerSelected"
+          :isMobile="isMobile"
+        />
       </v-col>
-      <v-col>
-        <CustomerInfo />
+      <v-col v-show="showCustomerInfo" sm="6">
+        <CustomerInfo
+          :customerSelected="isCustomerSelected"
+          :customerID="selectedCustomerID"
+          :isMobile="isMobile"
+          @closeCustomerInfo="closeCustomerInfo"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -24,10 +32,10 @@ export default {
   props: {},
   mixins: [functions],
   computed: {
-    ...mapGetters(["getCustomersBasicInfo"]),
+    ...mapGetters(["getCustomersBasicInfo", "getMobileThreshold"]),
     showCustomerList() {
       if (this.isMobile) {
-        if (this.customerSelected) {
+        if (this.isCustomerSelected) {
           return false;
         } else {
           return true;
@@ -36,10 +44,22 @@ export default {
         return true;
       }
     },
+    showCustomerInfo() {
+      if (this.isMobile) {
+        if (this.isCustomerSelected) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
   },
   data() {
     return {
-      customerSelected: false,
+      isCustomerSelected: false,
+      selectedCustomerID: null,
       isMobile: false,
     };
   },
@@ -47,10 +67,7 @@ export default {
     // Execute code after the component is created
   },
   mounted() {
-    // Check if the viewport width is below the threshold (e.g., 768px)
-    this.isMobile = window.innerWidth < 768;
-
-    // Listen for window resize to update the isMobile flag if needed
+    this.isMobile = window.innerWidth < this.getMobileThreshold;
     window.addEventListener("resize", this.handleResize);
   },
   beforeUnmount() {
@@ -60,8 +77,14 @@ export default {
   methods: {
     handleResize() {
       // Update the isMobile flag on window resize
-      this.isMobile = window.innerWidth < 768;
-      console.log(this.isMobile);
+      this.isMobile = window.innerWidth < this.getMobileThreshold;
+    },
+    customerSelected(customerID) {
+      this.selectedCustomerID = customerID;
+      this.isCustomerSelected = true;
+    },
+    closeCustomerInfo() {
+      this.isCustomerSelected = false;
     },
   },
 };

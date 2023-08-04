@@ -1,5 +1,33 @@
 <template>
-  <v-container class="simple-border-container"> hi</v-container>
+  <v-container class="simple-border-container pb-6 pa-5">
+    <v-row v-if="isMobile">
+      <v-btn
+        v-show="customerSelected"
+        flat
+        icon="mdi-chevron-left"
+        @click="goBack()"
+      />
+    </v-row>
+    <v-row align="center">
+      <div
+        :class="['text-h5 pl-3', !customerSelected && !isMobile ? 'pt-2' : '']"
+      >
+        Customer Info
+      </div>
+      <v-spacer />
+      <v-btn
+        v-show="customerSelected && !isMobile"
+        flat
+        icon="mdi-close"
+        @click="goBack()"
+      >
+      </v-btn>
+    </v-row>
+
+    <div class="mt-4" v-show="customerSelected">
+      {{ customerInfo }}
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -9,7 +37,18 @@ import { mapGetters } from "vuex";
 
 export default {
   props: {
-    // Define your props here
+    customerID: {
+      type: Number,
+      required: true,
+    },
+    customerSelected: {
+      type: Boolean,
+      required: true,
+    },
+    isMobile: {
+      type: Boolean,
+      required: true,
+    },
   },
   mixins: [functions],
   data() {
@@ -25,10 +64,22 @@ export default {
   mounted() {
     // Execute code after the component is mounted
   },
-  methods: {},
+  methods: {
+    loadCustomerInfo() {
+      this.customerInfo = this.getCustomerInfo(this.customerID);
+    },
+    goBack() {
+      this.$emit("closeCustomerInfo");
+    },
+  },
 
   watch: {
-    // Define your watchers here
+    customerSelected() {
+      this.loadCustomerInfo();
+    },
+    customerID() {
+      this.loadCustomerInfo();
+    },
   },
 };
 </script>
