@@ -45,9 +45,17 @@
           <td
             v-for="header in headers"
             :key="header"
-            class="text-left table-data"
+            class="text-left table-data pt-6 pb-6"
           >
             {{ customer[header.value] }}
+          </td>
+          <td>
+            <v-btn
+              flat
+              icon="mdi-pencil"
+              @click="selectCustomer((editButtonPressed = true))"
+            >
+            </v-btn>
           </td>
         </tr>
       </tbody>
@@ -58,12 +66,9 @@
 <script>
 import functions from "@/helpers/functions";
 import { mapGetters } from "vuex";
-// import store from "@/store";
 
 export default {
-  props: {
-    // Define your props here
-  },
+  props: {},
   mixins: [functions],
   data() {
     return {
@@ -75,16 +80,12 @@ export default {
   },
   computed: {
     ...mapGetters(["getCustomersBasicInfo"]),
-    // Define your computed properties here
   },
   created() {
-    //console.log(this.$store.getters.getCustomersBasicInfo);
     this.customers = this.getCustomersBasicInfo;
     this.buildHeaders();
   },
-  mounted() {
-    // Execute code after the component is mounted
-  },
+  mounted() {},
   methods: {
     buildHeaders() {
       const headers = [];
@@ -99,7 +100,7 @@ export default {
       this.headers = headers;
     },
     selectCustomer(id) {
-      console.log(id);
+      this.$emit("customer-selected", id);
     },
 
     searchCustomers() {
@@ -117,9 +118,7 @@ export default {
     },
   },
 
-  watch: {
-    // Define your watchers here
-  },
+  watch: {},
 };
 </script>
 <style scoped>
@@ -127,7 +126,7 @@ export default {
   padding-left: 16px;
 }
 .customer-row:hover {
-  background-color: #f5f5f5;
+  background-color: #f8f8f8;
   cursor: pointer;
 }
 .table {

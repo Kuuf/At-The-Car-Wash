@@ -10,6 +10,7 @@ import App from "./App.vue";
 // Composables
 import { createApp } from "vue";
 import { createStore } from "vuex";
+import "./style.css";
 
 // Create a new store instance.
 const store = createStore({
