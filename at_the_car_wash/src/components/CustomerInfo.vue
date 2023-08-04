@@ -18,6 +18,13 @@
       <v-btn
         v-show="customerSelected && !isMobile"
         flat
+        :icon="fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'"
+        @click="toggleFullScreen()"
+      >
+      </v-btn>
+      <v-btn
+        v-show="customerSelected && !isMobile && !fullscreen"
+        flat
         icon="mdi-close"
         @click="goBack()"
       >
@@ -54,6 +61,7 @@ export default {
   data() {
     return {
       customerInfo: [],
+      fullscreen: false,
     };
   },
   computed: {
@@ -70,6 +78,10 @@ export default {
     },
     goBack() {
       this.$emit("closeCustomerInfo");
+    },
+    toggleFullScreen() {
+      this.fullscreen = !this.fullscreen;
+      this.$emit("toggleFullScreen");
     },
   },
 

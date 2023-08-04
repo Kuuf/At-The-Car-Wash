@@ -7,12 +7,13 @@
           :isMobile="isMobile"
         />
       </v-col>
-      <v-col v-show="showCustomerInfo" sm="6">
+      <v-col v-show="showCustomerInfo" :sm="customerInfoFullScreen ? '12' : 6">
         <CustomerInfo
           :customerSelected="isCustomerSelected"
           :customerID="selectedCustomerID"
           :isMobile="isMobile"
           @closeCustomerInfo="closeCustomerInfo"
+          @toggleFullScreen="toggleCustomerInfoFullScreen"
         />
       </v-col>
     </v-row>
@@ -34,6 +35,9 @@ export default {
   computed: {
     ...mapGetters(["getCustomersBasicInfo", "getMobileThreshold"]),
     showCustomerList() {
+      if (this.customerInfoFullScreen) {
+        return false;
+      }
       if (this.isMobile) {
         if (this.isCustomerSelected) {
           return false;
@@ -61,6 +65,7 @@ export default {
       isCustomerSelected: false,
       selectedCustomerID: null,
       isMobile: false,
+      customerInfoFullScreen: false,
     };
   },
   created() {
@@ -85,6 +90,9 @@ export default {
     },
     closeCustomerInfo() {
       this.isCustomerSelected = false;
+    },
+    toggleCustomerInfoFullScreen() {
+      this.customerInfoFullScreen = !this.customerInfoFullScreen;
     },
   },
 };
