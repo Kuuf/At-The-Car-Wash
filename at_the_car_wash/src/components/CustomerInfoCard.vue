@@ -11,14 +11,19 @@
         city: "Anytown",
         state: "CA",
       -->
-    <div>
+    <v-layout row align="center" justify="left">
       <div class="text-h7 bold text-primary">{{ customerInfo.name }}</div>
-      <div class="text-body-1">{{ customerInfo.email }}</div>
-      <div class="text-body-1">{{ customerInfo.phone }}</div>
-      <div class="text-body-1">{{ customerInfo.address }}</div>
-      <div class="text-body-1">
-        {{ customerInfo.city }}, {{ customerInfo.state }}
+      <v-spacer />
+      <div class="text-caption-1 font-weight-thin">
+        Customer ID: {{ customerInfo.id }}
       </div>
+    </v-layout>
+
+    <div class="text-body-1">{{ customerInfo.email }}</div>
+    <div class="text-body-1">{{ customerInfo.phone }}</div>
+    <div class="text-body-1">{{ customerInfo.address }}</div>
+    <div class="text-body-1">
+      {{ customerInfo.city }}, {{ customerInfo.state }}
     </div>
   </div>
 </template>

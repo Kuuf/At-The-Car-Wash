@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar elevation="1" color="primary">
+  <v-app-bar elevation="1">
     <v-app-bar-title>
       <v-icon icon="mdi-map-search-outline" />
 

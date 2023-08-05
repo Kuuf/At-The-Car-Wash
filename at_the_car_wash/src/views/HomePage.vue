@@ -7,6 +7,7 @@
         class="simple-border-container white-container"
       >
         <CustomerFinder
+          ref="customerFinder"
           @customer-selected="customerSelected"
           :isMobile="isMobile"
         />
@@ -98,6 +99,7 @@ export default {
     },
     closeCustomerInfo() {
       this.isCustomerSelected = false;
+      this.$refs.customerFinder.selectedCustomerID = null;
     },
     toggleCustomerInfoFullScreen() {
       this.customerInfoFullScreen = !this.customerInfoFullScreen;

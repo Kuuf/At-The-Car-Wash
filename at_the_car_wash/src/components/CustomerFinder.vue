@@ -1,32 +1,33 @@
 <template>
   <div class="white-container">
-    <v-row class="pa-3 pt-5" no-gutters>
-      <v-col sm="12">
-        <div class="text-h7">Customer Search</div>
-      </v-col>
-      <v-col sm="6">
-        <v-text-field
-          v-model="search"
-          label="Search"
-          prepend-inner-icon="mdi-magnify"
-          variant="outlined"
-          class="mt-2 pr-1"
-          @keyup="searchCustomers"
-          @change="searchCustomers"
-        ></v-text-field>
-      </v-col>
-      <v-col sm="6">
-        <v-select
-          v-model="searchBy"
-          label="Search By"
-          variant="outlined"
-          class="mt-2 pl-1"
-          :items="headers"
-          item-title="text"
-          item-value="value"
-        ></v-select>
-      </v-col>
-    </v-row>
+    <div class="pa-3 primary-background">
+      <div class="text-h7 text-white bold mt-2">Customer Search</div>
+      <v-row class="pt-2" no-gutters>
+        <v-col sm="6">
+          <v-text-field
+            v-model="search"
+            placeholder="Search"
+            prepend-inner-icon="mdi-magnify"
+            variant="outlined"
+            class="mt-2 pr-1"
+            @keyup="searchCustomers"
+            @change="searchCustomers"
+            bg-color="white"
+          ></v-text-field>
+        </v-col>
+        <v-col sm="6">
+          <v-select
+            v-model="searchBy"
+            variant="outlined"
+            class="mt-2 pl-1"
+            :items="headers"
+            item-title="text"
+            item-value="value"
+            bg-color="white"
+          ></v-select>
+        </v-col>
+      </v-row>
+    </div>
     <v-divider />
     <div class="overflow-scroll">
       <div
@@ -67,7 +68,7 @@ export default {
       customers: [],
       headers: [],
       search: "",
-      searchBy: "id",
+      searchBy: "name",
       selectedCustomerID: null,
     };
   },

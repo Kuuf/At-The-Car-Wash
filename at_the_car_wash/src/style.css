@@ -7,6 +7,10 @@
   background-color: #fff;
 }
 
+.primary-background {
+  background-color: #1867c0;
+}
+
 .simple-border-container {
   padding: 16px;
   border: 1px solid #ccc;
