@@ -22,7 +22,7 @@
       </div>
 
       <v-spacer />
-      <v-btn flat color="red" class="mr-2">Update Profile</v-btn>
+      <v-btn flat color="primary" class="mr-2">Update Profile</v-btn>
       <v-btn
         v-show="customerSelected && !isMobile"
         flat

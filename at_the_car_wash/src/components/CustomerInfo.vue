@@ -28,16 +28,16 @@
       </v-text-field>
       <div class="text-h5 account-info-header">Vehicles</div>
       <v-divider class="mb-4 mt-1" />
-      <div class="text-body-1">{{ lorem }}</div>
+      <div class="text-body-3">{{ lorem }}</div>
       <div class="text-h5 account-info-header">Subscriptions</div>
       <v-divider class="mb-4 mt-1" />
-      <div class="text-body-1">{{ lorem }}</div>
+      <div class="text-body-3">{{ lorem }}</div>
       <div class="text-h5 account-info-header">Purchase History</div>
       <v-divider class="mb-4 mt-1" />
-      <div class="text-body-1">{{ lorem }}</div>
+      <div class="text-body-3">{{ lorem }}</div>
       <div class="text-h5 account-info-header">Lorem Ipsum</div>
       <v-divider class="mb-4 mt-1" />
-      <div class="text-body-1">{{ lorem }}</div>
+      <div class="text-body-3">{{ lorem }}</div>
     </div>
   </div>
 </template>

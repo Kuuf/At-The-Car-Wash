@@ -1,6 +1,9 @@
 <template>
   <div
-    :class="['pa-4 hover-secondary', isSelected ? 'secondary-background' : '']"
+    :class="[
+      'pa-4 hover-secondary customer-info-card',
+      isSelected ? 'secondary-left-border' : '',
+    ]"
   >
     <!--
         id: 3,
@@ -19,10 +22,10 @@
       </div>
     </v-layout>
 
-    <div class="text-body-1">{{ customerInfo.email }}</div>
-    <div class="text-body-1">{{ customerInfo.phone }}</div>
-    <div class="text-body-1">{{ customerInfo.address }}</div>
-    <div class="text-body-1">
+    <div class="text-body-3">{{ customerInfo.email }}</div>
+    <div class="text-body-3">{{ customerInfo.phone }}</div>
+    <div class="text-body-3">{{ customerInfo.address }}</div>
+    <div class="text-body-3">
       {{ customerInfo.city }}, {{ customerInfo.state }}
     </div>
   </div>

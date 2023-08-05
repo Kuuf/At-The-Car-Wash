@@ -1,8 +1,7 @@
 <template>
   <div class="white-container">
     <div class="pa-3 primary-background">
-      <div class="text-h7 text-white mt-2">Customer Search</div>
-      <v-row class="pt-2" no-gutters>
+      <v-row no-gutters>
         <v-col sm="6">
           <v-text-field
             v-model="search"
@@ -13,6 +12,7 @@
             @keyup="searchCustomers"
             @change="searchCustomers"
             bg-color="white"
+            hide-details
           ></v-text-field>
         </v-col>
         <v-col sm="6">
@@ -24,6 +24,7 @@
             item-title="text"
             item-value="value"
             bg-color="white"
+            hide-details
           ></v-select>
         </v-col>
       </v-row>
@@ -42,6 +43,9 @@
           :isSelected="customer.id === selectedCustomerID"
         />
         <v-divider />
+      </div>
+      <div v-if="customers.length === 0" class="text-body-2 pa-3">
+        No customers found
       </div>
     </div>
   </div>
