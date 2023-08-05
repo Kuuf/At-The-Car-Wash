@@ -17,16 +17,16 @@
     <v-layout row align="center" justify="left">
       <div class="text-h7 bold text-primary">{{ customerInfo.name }}</div>
       <v-spacer />
-      <div class="text-caption-1 font-weight-thin">
-        Customer ID: {{ customerInfo.id }}
+      <div class="text-caption-1 font-weight-light">
+        ID: {{ customerInfo.id }}
       </div>
     </v-layout>
 
-    <div class="text-body-3">{{ customerInfo.email }}</div>
-    <div class="text-body-3">{{ customerInfo.phone }}</div>
-    <div class="text-body-3">{{ customerInfo.address }}</div>
-    <div class="text-body-3">
-      {{ customerInfo.city }}, {{ customerInfo.state }}
+    <div class="text-body-2 font-weight-light">{{ customerInfo.email }}</div>
+    <div class="text-caption font-weight-light">{{ customerInfo.phone }}</div>
+    <div class="text-caption font-weight-light">
+      {{ customerInfo.address }}, {{ customerInfo.city }},
+      {{ customerInfo.state }}
     </div>
   </div>
 </template>
