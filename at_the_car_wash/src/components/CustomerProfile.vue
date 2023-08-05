@@ -10,7 +10,7 @@
       />
     </v-row>
     <!-- toolbar -->
-    <v-row align="center" class="overflow-scroll pa-6">
+    <v-row align="center" class="overflow-scroll pa-6 pb-0">
       <div class="pa-3">
         <div class="text-h5">
           {{ customerSelected && customerInfo ? customerInfo.info.name : "" }}
@@ -139,7 +139,7 @@ export default {
         if (profileSections && profileSections.length > headerIndex) {
           // Convert the HTMLCollection to an array and get the element at the specified index
           var element = Array.from(profileSections)[headerIndex];
-          const yOffset = this.isMobile ? -75 : -200;
+          const yOffset = this.isMobile ? -80 : -180;
           const y =
             element.getBoundingClientRect().top +
             customerInfoWindow.scrollTop +
