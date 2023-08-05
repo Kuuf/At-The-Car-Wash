@@ -1,37 +1,7 @@
 <template>
-  <div :class="[isMobile ? '' : 'simple-padding-container', 'pb-6', 'pt-5']">
+  <div>
     <!-- mobile toolbar -->
-    <v-row v-if="isMobile">
-      <v-btn
-        v-show="customerSelected"
-        flat
-        icon="mdi-chevron-left"
-        @click="goBack()"
-      />
-    </v-row>
-    <!-- toolbar -->
-    <v-row align="center" class="overflow-scroll">
-      <div
-        :class="['text-h7 pl-3', !customerSelected && !isMobile ? 'pt-3' : '']"
-      >
-        Customer Info
-      </div>
-      <v-spacer />
-      <v-btn
-        v-show="customerSelected && !isMobile"
-        flat
-        :icon="fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'"
-        @click="toggleFullScreen()"
-      >
-      </v-btn>
-      <v-btn
-        v-show="customerSelected && !isMobile && !fullscreen"
-        flat
-        icon="mdi-close"
-        @click="goBack()"
-      >
-      </v-btn>
-    </v-row>
+
     <!-- info bOIII -->
     <!--
       id: 3,
@@ -42,25 +12,33 @@
       city: "Anytown",
       state: "CA",
     -->
-    <v-row>
-      <!-- navbar -->
-      <v-col sm="3"></v-col>
-      <!-- info -->
-      <v-col sm="9">
-        <div class="mt-4 overflow-scroll">
-          <div
-            v-show="customerSelected"
-            v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-            :key="item"
-          >
-            {{ customerInfo }}
-          </div>
-          <div v-show="!customerSelected">
-            <v-img src="@/assets/no_customer_selected.png"> </v-img>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
+
+    <div>
+      <div class="text-h5">Account Info</div>
+      <v-divider class="mb-4 mt-1" />
+      <v-text-field
+        v-for="(value, key) in customerInfo.info"
+        :key="key"
+        :value="value"
+        v-model="customerInfo.info[key]"
+      >
+        <template v-slot:label>
+          <div class="info-label">{{ key }}</div>
+        </template>
+      </v-text-field>
+      <div class="text-h5 account-info-header">Vehicles</div>
+      <v-divider class="mb-4 mt-1" />
+      <div class="text-body-1">{{ lorem }}</div>
+      <div class="text-h5 account-info-header">Subscriptions</div>
+      <v-divider class="mb-4 mt-1" />
+      <div class="text-body-1">{{ lorem }}</div>
+      <div class="text-h5 account-info-header">Purchase History</div>
+      <v-divider class="mb-4 mt-1" />
+      <div class="text-body-1">{{ lorem }}</div>
+      <div class="text-h5 account-info-header">Lorem Ipsum</div>
+      <v-divider class="mb-4 mt-1" />
+      <div class="text-body-1">{{ lorem }}</div>
+    </div>
   </div>
 </template>
 
@@ -73,13 +51,9 @@ export default {
   props: {
     customerID: {
       type: Number,
-      required: true,
+      required: false,
     },
     customerSelected: {
-      type: Boolean,
-      required: true,
-    },
-    isMobile: {
       type: Boolean,
       required: true,
     },
@@ -88,7 +62,8 @@ export default {
   data() {
     return {
       customerInfo: [],
-      fullscreen: false,
+      lorem:
+        "Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod.",
     };
   },
   computed: {
@@ -103,18 +78,6 @@ export default {
     loadCustomerInfo() {
       this.customerInfo = this.getCustomerInfo(this.customerID);
     },
-    goBack() {
-      if (this.fullscreen) {
-        this.$emit("toggleFullScreen");
-      }
-      this.fullscreen = false;
-      1;
-      this.$emit("closeCustomerInfo");
-    },
-    toggleFullScreen() {
-      this.fullscreen = !this.fullscreen;
-      this.$emit("toggleFullScreen");
-    },
   },
 
   watch: {
@@ -128,8 +91,7 @@ export default {
 };
 </script>
 <style scoped>
-.overflow-scroll {
-  overflow-y: auto;
-  max-height: calc(100vh - 176px);
+.info-label {
+  text-transform: capitalize;
 }
 </style>

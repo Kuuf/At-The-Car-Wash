@@ -22,7 +22,7 @@ const store = createStore({
         // John Doe
         {
           info: {
-            id: Math.random().toString(12).substring(2, 9),
+            id: 4723819056,
             name: "John Doe",
             email: "john@gmail.com",
             phone: "123-456-7890",
@@ -68,7 +68,7 @@ const store = createStore({
         },
         {
           info: {
-            id: Math.random().toString(12).substring(2, 9),
+            id: 957389267,
             name: "Jane Doe",
             email: "jane@gmail.com",
             phone: "123-456-7890",
@@ -114,7 +114,7 @@ const store = createStore({
         },
         {
           info: {
-            id: Math.random().toString(12).substring(2, 9),
+            id: 5672946578,
             name: "George Doe",
             email: "george@gmail.com",
             phone: "123-456-7890",

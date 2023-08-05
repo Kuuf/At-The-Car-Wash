@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar elevation="1">
+  <v-app-bar class="grey-bottom-border" flat>
     <template v-slot:prepend>
       <v-img src="@/assets/sunny_cup.png" height="40" width="40"> </v-img>
     </template>

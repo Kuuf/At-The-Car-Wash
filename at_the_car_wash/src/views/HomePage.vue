@@ -13,17 +13,21 @@
         />
       </v-col>
       <v-col
-        v-show="showCustomerInfo"
-        :sm="customerInfoFullScreen ? '12' : isCustomerSelected ? 8 : 6"
+        v-if="showCustomerProfile"
+        :sm="customerInfoFullScreen ? 12 : isCustomerSelected ? 8 : 6"
         class="simple-border-container white-container"
       >
-        <CustomerInfo
+        <CustomerProfile
+          v-show="isCustomerSelected"
           :customerSelected="isCustomerSelected"
           :customerID="selectedCustomerID"
           :isMobile="isMobile"
-          @closeCustomerInfo="closeCustomerInfo"
+          @closeCustomerProfile="closeCustomerProfile"
           @toggleFullScreen="toggleCustomerInfoFullScreen"
         />
+        <div v-show="!isCustomerSelected">
+          <v-img src="@/assets/no_customer_selected.png"> </v-img>
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -31,13 +35,13 @@
 
 <script>
 import CustomerFinder from "@/components/CustomerFinder.vue";
-import CustomerInfo from "@/components/CustomerInfo.vue";
+import CustomerProfile from "@/components/CustomerProfile.vue";
 import functions from "@/helpers/functions";
 import { mapGetters } from "vuex";
 export default {
   components: {
     CustomerFinder,
-    CustomerInfo,
+    CustomerProfile,
   },
   props: {},
   mixins: [functions],
@@ -57,7 +61,7 @@ export default {
         return true;
       }
     },
-    showCustomerInfo() {
+    showCustomerProfile() {
       if (this.isMobile) {
         if (this.isCustomerSelected) {
           return true;
@@ -97,7 +101,7 @@ export default {
       this.selectedCustomerID = customerID;
       this.isCustomerSelected = true;
     },
-    closeCustomerInfo() {
+    closeCustomerProfile() {
       this.isCustomerSelected = false;
       this.$refs.customerFinder.selectedCustomerID = null;
     },

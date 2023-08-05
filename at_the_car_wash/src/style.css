@@ -36,3 +36,16 @@
 .secondary-background {
   background-color: #ebf7ff;
 }
+
+.navbar-button {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.grey-bottom-border {
+  border-bottom: 1px solid #ccc;
+}
+
+.account-info-header {
+  margin-top: 16px;
+}
