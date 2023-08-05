@@ -21,13 +21,13 @@
     <NavbarButton
       label="Purchase History"
       :isSelected="selectedSection === 3"
-      icon="mdi-account"
+      icon="mdi-history"
       @click="goToComponent(3)"
     />
     <NavbarButton
       label="Lorem Ipsum"
       :isSelected="selectedSection === 4"
-      icon="mdi-account"
+      icon="mdi-airballoon"
       @click="goToComponent(4)"
     />
   </div>
