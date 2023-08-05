@@ -13,7 +13,7 @@
         />
       </v-col>
       <v-col
-        v-if="showCustomerProfile"
+        v-show="showCustomerProfile"
         :sm="customerInfoFullScreen ? 12 : isCustomerSelected ? 8 : 6"
         class="simple-border-container white-container"
       >
