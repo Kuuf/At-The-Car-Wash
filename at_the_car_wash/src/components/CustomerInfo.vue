@@ -1,5 +1,6 @@
 <template>
   <div :class="[isMobile ? '' : 'simple-padding-container', 'pb-6', 'pt-5']">
+    <!-- mobile toolbar -->
     <v-row v-if="isMobile">
       <v-btn
         v-show="customerSelected"
@@ -8,6 +9,7 @@
         @click="goBack()"
       />
     </v-row>
+    <!-- toolbar -->
     <v-row align="center" class="overflow-scroll">
       <div
         :class="['text-h7 pl-3', !customerSelected && !isMobile ? 'pt-3' : '']"
@@ -30,18 +32,35 @@
       >
       </v-btn>
     </v-row>
-    <div class="mt-4 overflow-scroll">
-      <div
-        v-show="customerSelected"
-        v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-        :key="item"
-      >
-        {{ customerInfo }}
-      </div>
-      <div v-show="!customerSelected">
-        <v-img src="@/assets/no_customer_selected.png"> </v-img>
-      </div>
-    </div>
+    <!-- info bOIII -->
+    <!--
+      id: 3,
+      name: "George Doe",
+      email: "george@gmail.com",
+      phone: "123-456-7890",
+      address: "1234 Main St",
+      city: "Anytown",
+      state: "CA",
+    -->
+    <v-row>
+      <!-- navbar -->
+      <v-col sm="3"></v-col>
+      <!-- info -->
+      <v-col sm="9">
+        <div class="mt-4 overflow-scroll">
+          <div
+            v-show="customerSelected"
+            v-for="item in [1, 2, 3, 4, 5, 6, 7]"
+            :key="item"
+          >
+            {{ customerInfo }}
+          </div>
+          <div v-show="!customerSelected">
+            <v-img src="@/assets/no_customer_selected.png"> </v-img>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -111,6 +130,6 @@ export default {
 <style scoped>
 .overflow-scroll {
   overflow-y: auto;
-  max-height: calc(100vh - 146px);
+  max-height: calc(100vh - 176px);
 }
 </style>

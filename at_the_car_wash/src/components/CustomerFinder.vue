@@ -1,7 +1,7 @@
 <template>
   <div class="white-container">
     <div class="pa-3 primary-background">
-      <div class="text-h7 text-white bold mt-2">Customer Search</div>
+      <div class="text-h7 text-white mt-2">Customer Search</div>
       <v-row class="pt-2" no-gutters>
         <v-col sm="6">
           <v-text-field
