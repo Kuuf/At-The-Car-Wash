@@ -14,7 +14,7 @@
     -->
 
     <div>
-      <div class="text-h5">Account Info</div>
+      <div class="text-h5 profile-section">Account Info</div>
       <v-divider class="mb-4 mt-1" />
       <v-text-field
         v-for="(value, key) in customerInfo.info"
@@ -26,16 +26,20 @@
           <div class="info-label">{{ key }}</div>
         </template>
       </v-text-field>
-      <div class="text-h5 account-info-header">Vehicles</div>
+      <div class="text-h5 account-info-header profile-section">Vehicles</div>
       <v-divider class="mb-4 mt-1" />
       <div class="text-body-3">{{ lorem }}</div>
-      <div class="text-h5 account-info-header">Subscriptions</div>
+      <div class="text-h5 account-info-header profile-section">
+        Subscriptions
+      </div>
       <v-divider class="mb-4 mt-1" />
       <div class="text-body-3">{{ lorem }}</div>
-      <div class="text-h5 account-info-header">Purchase History</div>
+      <div class="text-h5 account-info-header profile-section">
+        Purchase History
+      </div>
       <v-divider class="mb-4 mt-1" />
       <div class="text-body-3">{{ lorem }}</div>
-      <div class="text-h5 account-info-header">Lorem Ipsum</div>
+      <div class="text-h5 account-info-header profile-section">Lorem Ipsum</div>
       <v-divider class="mb-4 mt-1" />
       <div class="text-body-3">{{ lorem }}</div>
     </div>

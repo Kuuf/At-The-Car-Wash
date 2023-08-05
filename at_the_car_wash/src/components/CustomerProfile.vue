@@ -49,16 +49,18 @@
       state: "CA",
     -->
     <v-col sm="12" md="4" v-if="isMobile">
-      <Navbar />
+      <Navbar @select-header="navigateToProfileHeader" />
     </v-col>
     <v-row class="pa-3">
       <!-- navbar -->
       <v-col sm="12" md="4" v-if="!isMobile">
-        <Navbar />
+        <Navbar @select-header="navigateToProfileHeader" />
       </v-col>
       <!-- info -->
       <v-col sm="12" md="8">
-        <div :class="!isMobile ? 'overflow-scroll' : ''">
+        <div
+          :class="['info-scroll-window', !isMobile ? 'overflow-scroll' : '']"
+        >
           <CustomerInfo
             :customerSelected="customerSelected"
             :customerID="customerID"
@@ -125,6 +127,31 @@ export default {
     toggleFullScreen() {
       this.fullscreen = !this.fullscreen;
       this.$emit("toggleFullScreen");
+    },
+    navigateToProfileHeader(headerIndex) {
+      this.$nextTick(() => {
+        console.log(headerIndex);
+        let profileSections =
+          document.getElementsByClassName("profile-section");
+        let customerInfoWindow =
+          document.getElementsByClassName("info-scroll-window")[0];
+
+        if (profileSections && profileSections.length > headerIndex) {
+          // Convert the HTMLCollection to an array and get the element at the specified index
+          var element = Array.from(profileSections)[headerIndex];
+          const yOffset = this.isMobile ? -75 : -200;
+          const y =
+            element.getBoundingClientRect().top +
+            customerInfoWindow.scrollTop +
+            yOffset;
+
+          if (!this.isMobile) {
+            customerInfoWindow.scrollTo({ top: y, behavior: "smooth" });
+          } else {
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }
+      });
     },
   },
 

@@ -2,38 +2,33 @@
   <div>
     <NavbarButton
       label="Account Info"
-      component="account_info"
-      :isSelected="selectedSection === 1"
+      :isSelected="selectedSection === 0"
       icon="mdi-account"
-      @click="goToComponent('account_info', 1)"
+      @click="goToComponent(0)"
     />
     <NavbarButton
       label="Vehicles"
-      component="vehicles"
-      :isSelected="selectedSection === 2"
+      :isSelected="selectedSection === 1"
       icon="mdi-car"
-      @click="goToComponent('vehicles', 2)"
+      @click="goToComponent(1)"
     />
     <NavbarButton
       label="Subscriptions"
-      component="subscriptions"
-      :isSelected="selectedSection === 3"
+      :isSelected="selectedSection === 2"
       icon="mdi-license"
-      @click="goToComponent('subscriptions', 3)"
+      @click="goToComponent(2)"
     />
     <NavbarButton
       label="Purchase History"
-      component="purchase_history"
-      :isSelected="selectedSection === 4"
+      :isSelected="selectedSection === 3"
       icon="mdi-account"
-      @click="goToComponent('purchase_history', 4)"
+      @click="goToComponent(3)"
     />
     <NavbarButton
       label="Lorem Ipsum"
-      component="lorem_ipsum"
-      :isSelected="selectedSection === 5"
+      :isSelected="selectedSection === 4"
       icon="mdi-account"
-      @click="goToComponent('lorem_ipsum', 5)"
+      @click="goToComponent(4)"
     />
   </div>
 </template>
@@ -62,9 +57,9 @@ export default {
     // Execute code after the component is mounted
   },
   methods: {
-    goToComponent(component, id) {
+    goToComponent(id) {
       this.selectedSection = id;
-      this.$emit("goToComponent", component);
+      this.$emit("select-header", id);
     },
   },
 

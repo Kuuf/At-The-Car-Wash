@@ -24,14 +24,6 @@ export default {
       type: String,
       required: true,
     },
-    id: {
-      type: Number,
-      required: true,
-    },
-    component: {
-      type: String,
-      required: true,
-    },
     isSelected: {
       type: Boolean,
       required: true,
