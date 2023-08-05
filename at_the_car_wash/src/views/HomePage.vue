@@ -1,13 +1,21 @@
 <template>
-  <v-container>
+  <v-container class="pa-0 full-height">
     <v-row no-gutters>
-      <v-col v-show="showCustomerList" sm="6">
+      <v-col
+        v-show="showCustomerList"
+        :sm="isCustomerSelected ? 4 : 6"
+        class="simple-border-container white-container"
+      >
         <CustomerFinder
           @customer-selected="customerSelected"
           :isMobile="isMobile"
         />
       </v-col>
-      <v-col v-show="showCustomerInfo" :sm="customerInfoFullScreen ? '12' : 6">
+      <v-col
+        v-show="showCustomerInfo"
+        :sm="customerInfoFullScreen ? '12' : isCustomerSelected ? 8 : 6"
+        class="simple-border-container white-container"
+      >
         <CustomerInfo
           :customerSelected="isCustomerSelected"
           :customerID="selectedCustomerID"
@@ -97,3 +105,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.full-height {
+  height: calc(100vh - 64px);
+}
+</style>

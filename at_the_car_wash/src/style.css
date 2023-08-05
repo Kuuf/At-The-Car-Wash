@@ -1,7 +1,16 @@
-.simple-border-container {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.simple-padding-container {
   padding: 16px;
+  background-color: #fff;
+}
+
+.white-container {
+  background-color: #fff;
+}
+
+.simple-border-container {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .overflow-ellipsis {
@@ -13,4 +22,13 @@
 
 .bold {
   font-weight: 500;
+}
+
+.hover-secondary:hover {
+  cursor: pointer;
+  background-color: #ebf7ff;
+}
+
+.secondary-background {
+  background-color: #ebf7ff;
 }

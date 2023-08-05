@@ -18,8 +18,12 @@ export default createVuetify({
       light: {
         colors: {
           primary: "#1867C0",
-          secondary: "#5CBBF6",
-          accent: "#b289f7",
+          secondary: "#ebf7ff",
+          red: "#EC4339",
+          green: "#7CB82F",
+          orange: "#F47B16",
+          gray: "#86898C",
+          lightGray: "#F5F5F5",
         },
       },
     },

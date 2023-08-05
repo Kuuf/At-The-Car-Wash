@@ -1,14 +1,25 @@
 <template>
-  <div class="simple-border-container">
-    <v-row justify="start" no-gutters>
-      <v-col v-for="(header, index) in headers" :key="header" sm="6" lg="6">
-        <div class="text-left text-caption">{{ header.text }}</div>
-        <div class="text-left text-body-1 overflow-ellipsis">
-          {{ customerInfo[header.value] }}
-        </div>
-        <v-responsive width="100%" v-if="index % 2 == 0"></v-responsive>
-      </v-col>
-    </v-row>
+  <div
+    :class="['pa-4 hover-secondary', isSelected ? 'secondary-background' : '']"
+  >
+    <!--
+        id: 3,
+        name: "George Doe",
+        email: "george@gmail.com",
+        phone: "123-456-7890",
+        address: "1234 Main St",
+        city: "Anytown",
+        state: "CA",
+      -->
+    <div>
+      <div class="text-h7 bold text-primary">{{ customerInfo.name }}</div>
+      <div class="text-body-1">{{ customerInfo.email }}</div>
+      <div class="text-body-1">{{ customerInfo.phone }}</div>
+      <div class="text-body-1">{{ customerInfo.address }}</div>
+      <div class="text-body-1">
+        {{ customerInfo.city }}, {{ customerInfo.state }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,6 +33,10 @@ export default {
     },
     headers: {
       type: Array,
+      required: true,
+    },
+    isSelected: {
+      type: Boolean,
       required: true,
     },
   },

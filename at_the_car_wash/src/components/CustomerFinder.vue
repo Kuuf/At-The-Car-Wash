@@ -1,14 +1,16 @@
 <template>
-  <div :class="[isMobile ? '' : 'simple-border-container']">
-    <div class="text-h7">Customer Search</div>
-    <v-row>
+  <div class="white-container">
+    <v-row class="pa-3 pt-5" no-gutters>
+      <v-col sm="12">
+        <div class="text-h7">Customer Search</div>
+      </v-col>
       <v-col sm="6">
         <v-text-field
           v-model="search"
           label="Search"
           prepend-inner-icon="mdi-magnify"
           variant="outlined"
-          class="mt-2"
+          class="mt-2 pr-1"
           @keyup="searchCustomers"
           @change="searchCustomers"
         ></v-text-field>
@@ -18,25 +20,29 @@
           v-model="searchBy"
           label="Search By"
           variant="outlined"
-          class="mt-2"
+          class="mt-2 pl-1"
           :items="headers"
           item-title="text"
           item-value="value"
         ></v-select>
       </v-col>
     </v-row>
-    <v-table class="overflow-scroll">
-      <tbody>
-        <div
-          v-for="customer in customers"
-          :key="customer.id"
-          class="customer-row"
-          @click="selectCustomer(customer.id)"
-        >
-          <CustomerInfoCard :customerInfo="customer" :headers="headers" />
-        </div>
-      </tbody>
-    </v-table>
+    <v-divider />
+    <div class="overflow-scroll">
+      <div
+        v-for="customer in customers"
+        :key="customer.id"
+        class="customer-row"
+        @click="selectCustomer(customer.id)"
+      >
+        <CustomerInfoCard
+          :customerInfo="customer"
+          :headers="headers"
+          :isSelected="customer.id === selectedCustomerID"
+        />
+        <v-divider />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,6 +68,7 @@ export default {
       headers: [],
       search: "",
       searchBy: "id",
+      selectedCustomerID: null,
     };
   },
   computed: {
@@ -86,6 +93,7 @@ export default {
       this.headers = headers;
     },
     selectCustomer(id) {
+      this.selectedCustomerID = id;
       this.$emit("customer-selected", id);
     },
 
@@ -116,11 +124,11 @@ export default {
   padding-left: 16px;
 }
 .customer-row:hover {
-  background-color: #f8f8f8;
+  background-color: var(--v-red-base);
   cursor: pointer;
 }
 .overflow-scroll {
   overflow-y: auto;
-  max-height: calc(100vh - 240px);
+  max-height: calc(100vh - 204px);
 }
 </style>

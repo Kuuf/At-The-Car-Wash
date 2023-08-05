@@ -1,5 +1,5 @@
 <template>
-  <div :class="[isMobile ? '' : 'simple-border-container', 'pb-6']">
+  <div :class="[isMobile ? '' : 'simple-padding-container', 'pb-6', 'pt-5']">
     <v-row v-if="isMobile">
       <v-btn
         v-show="customerSelected"
@@ -10,7 +10,7 @@
     </v-row>
     <v-row align="center" class="overflow-scroll">
       <div
-        :class="['text-h7 pl-3', !customerSelected && !isMobile ? 'pt-2' : '']"
+        :class="['text-h7 pl-3', !customerSelected && !isMobile ? 'pt-3' : '']"
       >
         Customer Info
       </div>
@@ -89,6 +89,7 @@ export default {
         this.$emit("toggleFullScreen");
       }
       this.fullscreen = false;
+      1;
       this.$emit("closeCustomerInfo");
     },
     toggleFullScreen() {
@@ -110,6 +111,6 @@ export default {
 <style scoped>
 .overflow-scroll {
   overflow-y: auto;
-  max-height: calc(100vh - 179px);
+  max-height: calc(100vh - 146px);
 }
 </style>
