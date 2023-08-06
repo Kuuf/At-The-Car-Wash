@@ -80,11 +80,14 @@ export default {
     ...mapGetters(["getCustomersBasicInfo"]),
   },
   created() {
-    this.customers = this.getCustomersBasicInfo;
+    this.loadTable();
     this.buildHeaders();
   },
   mounted() {},
   methods: {
+    loadTable() {
+      this.customers = this.getCustomersBasicInfo;
+    },
     buildHeaders() {
       const headers = [];
       for (const key in this.customers[0]) {

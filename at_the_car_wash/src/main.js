@@ -165,28 +165,38 @@ const store = createStore({
     increment(state) {
       state.count++;
     },
-    editCustomerInfo(state, { id, info }) {
-      const customer = state.list.find((customer) => customer.info.id === id);
+    editCustomerInfo(state, updatedCustomer) {
+      updatedCustomer = JSON.parse(updatedCustomer);
+      console.log(updatedCustomer);
+      const customer = state.customers.find(
+        (customer) => customer.info.id === updatedCustomer.info.id
+      );
       if (customer) {
-        customer.info = { ...customer.info, ...info };
+        customer.info = { ...customer.info, ...updatedCustomer.info };
       }
     },
-    addCustomerSubscription(state, { id, subscription }) {
-      const customer = state.list.find((customer) => customer.info.id === id);
+    addCustomerSubscription(state, id, subscription) {
+      const customer = state.customers.find(
+        (customer) => customer.info.id === id
+      );
       if (customer) {
         customer.subscriptions.push(subscription);
       }
     },
-    removeCustomerSubscription(state, { id, subscription }) {
-      const customer = state.list.find((customer) => customer.info.id === id);
+    removeCustomerSubscription(state, id, subscription) {
+      const customer = state.customers.find(
+        (customer) => customer.info.id === id
+      );
       if (customer) {
         customer.subscriptions = customer.subscriptions.filter(
           (sub) => sub.id !== subscription.id
         );
       }
     },
-    transferCustomerSubscription(state, { id, subscription }) {
-      const customer = state.list.find((customer) => customer.info.id === id);
+    transferCustomerSubscription(state, id, subscription) {
+      const customer = state.customers.find(
+        (customer) => customer.info.id === id
+      );
       if (customer) {
         customer.subscriptions.push(subscription);
       }

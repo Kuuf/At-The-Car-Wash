@@ -24,6 +24,7 @@
           :isMobile="isMobile"
           @closeCustomerProfile="closeCustomerProfile"
           @toggleFullScreen="toggleCustomerInfoFullScreen"
+          @updatedCustomerInfo="updatedCustomerInfo"
         />
         <div v-show="!isCustomerSelected">
           <v-img src="@/assets/no_customer_selected.png"> </v-img>
@@ -107,6 +108,9 @@ export default {
     },
     toggleCustomerInfoFullScreen() {
       this.customerInfoFullScreen = !this.customerInfoFullScreen;
+    },
+    updatedCustomerInfo() {
+      this.$refs.customerFinder.loadTable();
     },
   },
 };

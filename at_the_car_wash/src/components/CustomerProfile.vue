@@ -22,7 +22,9 @@
       </div>
 
       <v-spacer />
-      <v-btn flat color="primary" class="mr-2">Update Profile</v-btn>
+      <v-btn flat color="primary" class="mr-2" @click="updateProfile"
+        >Update Profile</v-btn
+      >
       <v-btn
         v-show="customerSelected && !isMobile"
         flat
@@ -62,6 +64,7 @@
           :class="['info-scroll-window', !isMobile ? 'overflow-scroll' : '']"
         >
           <CustomerInfo
+            ref="customerInfo"
             :customerSelected="customerSelected"
             :customerID="customerID"
           />
@@ -115,6 +118,13 @@ export default {
   methods: {
     loadCustomerInfo() {
       this.customerInfo = this.getCustomerInfo(this.customerID);
+    },
+    updateProfile() {
+      this.$refs["customerInfo"].updateCustomerInfo();
+      //send updatedCustomerInfo to store to the editCustomerInfo mutation
+      //console.log(updatedCustomerInfo);
+      //this.$store.commit("editCustomerInfo", updatedCustomerInfo);
+      this.$emit("updatedCustomerInfo");
     },
     goBack() {
       if (this.fullscreen) {

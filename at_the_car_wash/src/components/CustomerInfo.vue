@@ -21,6 +21,7 @@
         :key="key"
         :value="value"
         v-model="customerInfo.info[key]"
+        :readonly="fieldDisabled(key)"
       >
         <template v-slot:label>
           <div class="info-label">{{ key }}</div>
@@ -65,14 +66,13 @@ export default {
   mixins: [functions],
   data() {
     return {
-      customerInfo: [],
+      customerInfo: {},
       lorem:
         "Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod.",
     };
   },
   computed: {
     ...mapGetters(["getCustomerInfo"]),
-    // Define your computed properties here
   },
   created() {},
   mounted() {
@@ -80,7 +80,16 @@ export default {
   },
   methods: {
     loadCustomerInfo() {
-      this.customerInfo = this.getCustomerInfo(this.customerID);
+      this.customerInfo = JSON.parse(
+        JSON.stringify(this.getCustomerInfo(this.customerID))
+      );
+    },
+    fieldDisabled(key) {
+      return key === "id";
+    },
+    updateCustomerInfo() {
+      console.log(this.customerInfo);
+      this.$store.commit("editCustomerInfo", JSON.stringify(this.customerInfo));
     },
   },
 
@@ -90,6 +99,12 @@ export default {
     },
     customerID() {
       this.loadCustomerInfo();
+    },
+    customerInfo: {
+      handler() {
+        this.$emit("madeChanges");
+      },
+      deep: true,
     },
   },
 };
