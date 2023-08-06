@@ -81,6 +81,19 @@
           </div>
           <v-spacer />
           <v-btn flat icon="mdi-pencil" @click="editVehicle(index)"></v-btn>
+          <v-btn
+            v-if="!deleteVehicleConfirmArray[index] || false"
+            flat
+            icon="mdi-delete"
+            @click="deleteVehicleConfirmArray[index] = true"
+          ></v-btn>
+          <v-btn
+            v-if="false"
+            elevation="0"
+            color="purple"
+            @click="deleteVehicle(index)"
+            >Confirm Delete</v-btn
+          >
         </v-layout>
 
         <v-divider class="mt-4 mb-4" />
@@ -92,9 +105,7 @@
         <v-layout row align="center">
           <v-icon class="mt-9 mr-1">mdi-car-cog</v-icon>
 
-          <div class="text-h5 account-info-header profile-section">
-            Add Vehicle
-          </div>
+          <div class="text-h5 account-info-header">Add Vehicle</div>
         </v-layout>
         <v-divider class="mb-4 mt-4" />
         <v-form ref="addVehicleForm" v-model="addVehicleFormValid">
@@ -237,6 +248,7 @@ export default {
       editVehicleFormValid: false,
       subscriptions: [],
       editedVehicle: {},
+      deleteVehicleConfirmArray: [],
       editedVehicleIndex: null,
       addingVehicle: false,
       addedVehicle: {},
@@ -288,6 +300,7 @@ export default {
       this.customerInfo.vehicles.push(this.addedVehicle);
       this.addedVehicle = {};
     },
+    deleteVehicle() {},
     cancelAddVehicle() {
       this.addingVehicle = false;
       this.addedVehicle = {};
