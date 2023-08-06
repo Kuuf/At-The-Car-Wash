@@ -53,7 +53,7 @@
     <v-col sm="12" md="4" v-if="isMobile">
       <Navbar @select-header="navigateToProfileHeader" />
     </v-col>
-    <v-row class="pa-3">
+    <v-row class="pa-3 mt-0">
       <!-- navbar -->
       <v-col sm="12" md="4" v-if="!isMobile">
         <Navbar @select-header="navigateToProfileHeader" />
@@ -178,6 +178,6 @@ export default {
 <style scoped>
 .overflow-scroll {
   overflow-y: auto;
-  max-height: calc(100vh - 230px);
+  max-height: calc(100vh - 185px);
 }
 </style>

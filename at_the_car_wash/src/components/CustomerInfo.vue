@@ -18,7 +18,7 @@
         <v-icon class="mt-1 mr-2">mdi-account</v-icon>
         <div class="text-h5 profile-section">Account Info</div>
       </v-layout>
-      <v-divider class="mb-4 mt-1" />
+      <v-divider class="mb-4 mt-4" />
       <div v-for="(value, key) in customerInfo.info" :key="key">
         <v-text-field
           :value="value"
@@ -30,67 +30,74 @@
         </v-text-field>
       </div>
       <v-layout row align="center">
-        <v-icon class="mt-5 mr-1">mdi-car</v-icon>
+        <v-icon class="mt-9 mr-1">mdi-car</v-icon>
 
         <div class="text-h5 account-info-header profile-section">Vehicles</div>
-        <v-spacer />
-        <v-btn color="primary mt-3" @click="addVehicle" elevation="0"
-          ><v-icon class="mr-2">mdi-plus</v-icon>Add Vehicle</v-btn
-        >
       </v-layout>
 
-      <v-divider class="mb-4 mt-1" />
-      <v-row
-        v-for="(vehicle, index) in customerInfo.vehicles"
-        :key="vehicle.id"
-      >
+      <v-divider class="mb-4 mt-4" />
+      <div v-for="(vehicle, index) in customerInfo.vehicles" :key="vehicle.id">
         <div v-if="editedVehicleIndex == index && editedVehicleIndex != null">
-          <v-row>
-            <v-col
-              sm="12"
-              md="6"
-              v-for="(value, key, index) in editedVehicle"
-              :key="index"
+          <div
+            sm="12"
+            v-for="(value, key, index) in editedVehicle"
+            :key="index"
+          >
+            <v-text-field
+              v-if="key != 'subscription'"
+              :value="value"
+              v-model="editedVehicle[key]"
+              :readonly="fieldDisabled(key)"
             >
-              <v-text-field
-                v-if="key != 'subscription'"
-                :value="value"
-                v-model="editedVehicle[key]"
-                :readonly="fieldDisabled(key)"
-              >
-                <template v-slot:label>
-                  <div class="info-label">{{ key }}</div>
-                </template>
-              </v-text-field>
-            </v-col>
-          </v-row>
+              <template v-slot:label>
+                <div class="info-label">{{ key }}</div>
+              </template>
+            </v-text-field>
+          </div>
+
           <v-layout row align="center">
-            <v-btn @click="cancelEditVehicle" elevation="0">Cancel</v-btn>
+            <v-btn
+              @click="cancelEditVehicle"
+              elevation="0"
+              class="mr-2"
+              color="#f5f5f5"
+              >Cancel</v-btn
+            >
             <v-btn color="primary" @click="saveVehicle(index)" elevation="0"
               >Save</v-btn
             >
           </v-layout>
         </div>
-        <v-col sm="12" v-else>
-          <v-layout row align="center">
-            {{ concatVehicleInfo(vehicle) }}
-            <v-spacer />
-            <v-btn flat icon="mdi-pencil" @click="editVehicle(index)"></v-btn>
-          </v-layout>
-        </v-col>
 
-        <v-divider
-          v-if="index < customerInfo.vehicles.length - 1"
-          class="mb-4"
-        />
-      </v-row>
+        <v-layout row class="text-left" v-else>
+          <div>
+            <div class="text-h7">
+              {{ vehicle.color }} {{ vehicle.make }} {{ vehicle.model }}
+            </div>
+            <div class="text-caption font-weight-light">
+              {{ vehicle.year }}, {{ vehicle.licensePlate }}
+            </div>
+          </div>
+          <v-spacer />
+          <v-btn flat icon="mdi-pencil" @click="editVehicle(index)"></v-btn>
+        </v-layout>
+
+        <v-divider class="mt-4 mb-4" />
+      </div>
+      <v-layout row align="baseline">
+        <v-spacer />
+        <v-btn color="primary mt-3 mb-4" @click="addVehicle" elevation="0"
+          ><v-icon class="mr-2">mdi-plus</v-icon>Add Vehicle</v-btn
+        >
+      </v-layout>
       <v-layout row align="center">
-        <v-icon class="mt-5 mr-1">mdi-license</v-icon>
+        <v-icon class="mt-9 mr-1">mdi-license</v-icon>
         <div class="text-h5 account-info-header profile-section">
           Subscriptions
         </div>
       </v-layout>
-      <v-divider class="mb-4 mt-1" />
+
+      <v-divider class="mb-4 mt-4" />
       <div v-for="(vehicle, index) in customerInfo.vehicles" :key="vehicle.id">
         <div>
           <div class="text-caption">Vehicle {{ vehicle.id }}</div>
@@ -117,28 +124,33 @@
         </v-layout>
       </div>
       <v-layout row align="center">
-        <v-icon class="mt-5 mr-1">mdi-history</v-icon>
+        <v-icon class="mt-9 mr-1">mdi-history</v-icon>
         <div class="text-h5 account-info-header profile-section">
           Purchase History
         </div>
       </v-layout>
-      <v-divider class="mb-4 mt-1" />
+      <v-divider class="mb-4 mt-4" />
       <div v-for="purchase in customerInfo.purchaseHistory" :key="purchase">
-        <v-layout row align="center" sm="6">
-          <div class="text-body-3 mr-1">{{ purchase.name }}</div>
-          <div class="text-body-2">{{ purchase.price }}</div>
+        <v-layout sm="6">
+          <div class="text-body-3 mr-1">
+            {{ purchase.date }}
+          </div>
         </v-layout>
         <div class="text-caption">
-          {{ purchase.date }}
+          {{ concatVehicleInfo(getVehicleFromID(purchase.vehicle)) }}
         </div>
+        <div class="text-caption">
+          {{ purchase.name }}: ${{ purchase.price }}
+        </div>
+        <v-divider class="mt-4 mb-4" style="width: 50%" />
       </div>
       <v-layout row align="center">
-        <v-icon class="mt-5 mr-1">mdi-airballoon</v-icon>
+        <v-icon class="mt-9 mr-1">mdi-airballoon</v-icon>
         <div class="text-h5 account-info-header profile-section">
           Lorem Ipsum
         </div>
       </v-layout>
-      <v-divider class="mb-4 mt-1" />
+      <v-divider class="mb-4 mt-4" />
       <div class="text-body-3">{{ lorem }}</div>
     </div>
   </div>
@@ -226,6 +238,9 @@ export default {
     cancelEditVehicle() {
       this.editedVehicle = null;
       this.editedVehicleIndex = null;
+    },
+    getVehicleFromID(id) {
+      return this.customerInfo.vehicles.find((vehicle) => vehicle.id === id);
     },
   },
 
