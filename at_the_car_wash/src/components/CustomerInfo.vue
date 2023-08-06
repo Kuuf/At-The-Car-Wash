@@ -74,17 +74,29 @@
       </v-layout>
       <v-divider class="mb-4 mt-1" />
       <div v-for="(vehicle, index) in customerInfo.vehicles" :key="vehicle.id">
-        <div class="text-caption">Vehicle {{ vehicle.id }}</div>
-        <div class="text-body1">
-          {{ concatVehicleInfo(vehicle) }}
+        <div>
+          <div class="text-caption">Vehicle {{ vehicle.id }}</div>
+          <div class="text-body1">
+            {{ concatVehicleInfo(vehicle) }}
+          </div>
         </div>
-        <v-select
-          v-model="vehicle.subscription"
-          :items="subscriptions"
-          item-title="name"
-          item-value="id"
-          class="mt-2 mb-4"
-        />
+        <v-spacer />
+
+        <v-layout row align="center" style="text-align: left" class="mt-2 mb-4">
+          <v-select
+            v-model="vehicle.subscription"
+            :items="subscriptions"
+            item-title="name"
+            item-value="id"
+          />
+          <v-btn
+            flat
+            class="mt-1"
+            icon="mdi-delete"
+            v-show="vehicle.subscription != null"
+            @click="removeSubscription(index)"
+          />
+        </v-layout>
       </div>
       <v-layout row align="center">
         <v-icon class="mt-5 mr-1">mdi-history</v-icon>
@@ -176,6 +188,9 @@ export default {
     },
     addVehicle() {
       console.log("add vehicle");
+    },
+    removeSubscription(index) {
+      this.customerInfo.vehicles[index].subscription = null;
     },
   },
 

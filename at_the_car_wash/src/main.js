@@ -20,6 +20,10 @@ const store = createStore({
       count: 0,
       subscriptions: [
         {
+          id: null,
+          name: "No Subscription",
+        },
+        {
           id: 1,
           name: "Gold Membership",
           price: 12.99,
