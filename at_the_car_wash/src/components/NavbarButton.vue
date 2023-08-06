@@ -35,9 +35,7 @@ export default {
   },
   mixins: [functions],
   data() {
-    return {
-      selectedSection: 1,
-    };
+    return {};
   },
   computed: {
     // Define your computed properties here

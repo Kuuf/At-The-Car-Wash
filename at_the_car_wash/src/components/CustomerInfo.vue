@@ -1,18 +1,6 @@
 <template>
   <div>
-    <!-- mobile toolbar -->
-
-    <!-- info bOIII -->
-    <!--
-      id: 3,
-      name: "George Doe",
-      email: "george@gmail.com",
-      phone: "123-456-7890",
-      address: "1234 Main St",
-      city: "Anytown",
-      state: "CA",
-    -->
-
+    <!-- Account Info -->
     <div class="customer-info">
       <v-layout row align="center">
         <v-icon class="mt-1 mr-2">mdi-account</v-icon>
@@ -29,6 +17,9 @@
           </template>
         </v-text-field>
       </div>
+
+      <!-- Vehicles -->
+
       <v-layout row align="center">
         <v-icon class="mt-9 mr-1">mdi-car</v-icon>
 
@@ -37,7 +28,12 @@
 
       <v-divider class="mb-4 mt-4" />
       <div v-for="(vehicle, index) in customerInfo.vehicles" :key="vehicle.id">
-        <div v-if="editedVehicleIndex == index && editedVehicleIndex != null">
+        <!-- Edit Vehicle -->
+        <v-form
+          ref="editVehicleForm"
+          v-model="editVehicleFormValid"
+          v-if="editedVehicleIndex == index && editedVehicleIndex != null"
+        >
           <div
             sm="12"
             v-for="(value, key, index) in editedVehicle"
@@ -48,6 +44,7 @@
               :value="value"
               v-model="editedVehicle[key]"
               :readonly="fieldDisabled(key)"
+              :rules="[required]"
             >
               <template v-slot:label>
                 <div class="info-label">{{ key }}</div>
@@ -63,11 +60,15 @@
               color="#f5f5f5"
               >Cancel</v-btn
             >
-            <v-btn color="primary" @click="saveVehicle(index)" elevation="0"
+            <v-btn
+              color="primary"
+              :disabled="!editVehicleFormValid"
+              @click="saveVehicle(index)"
+              elevation="0"
               >Save</v-btn
             >
           </v-layout>
-        </div>
+        </v-form>
 
         <v-layout row class="text-left" v-else>
           <div>
@@ -84,12 +85,63 @@
 
         <v-divider class="mt-4 mb-4" />
       </div>
+
+      <!-- Add Vehicle -->
+
+      <div v-show="addingVehicle">
+        <v-layout row align="center">
+          <v-icon class="mt-9 mr-1">mdi-car-cog</v-icon>
+
+          <div class="text-h5 account-info-header profile-section">
+            Add Vehicle
+          </div>
+        </v-layout>
+        <v-divider class="mb-4 mt-4" />
+        <v-form ref="addVehicleForm" v-model="addVehicleFormValid">
+          <div v-for="(value, key, index) in addedVehicle" :key="index">
+            <v-text-field
+              v-if="key != 'subscription'"
+              :value="value"
+              v-model="addedVehicle[key]"
+              :rules="[required]"
+              :readonly="fieldDisabled(key)"
+            >
+              <template v-slot:label>
+                <div class="info-label">{{ key }}</div>
+              </template>
+            </v-text-field>
+          </div>
+        </v-form>
+      </div>
       <v-layout row align="baseline">
+        <v-btn
+          @click="cancelAddVehicle"
+          elevation="0"
+          class="mr-2"
+          color="#f5f5f5"
+          v-show="addingVehicle"
+          >Cancel</v-btn
+        >
+        <v-btn
+          color="primary"
+          @click="addVehicle"
+          v-show="addingVehicle"
+          :disabled="!addVehicleFormValid"
+          elevation="0"
+          >Save</v-btn
+        >
         <v-spacer />
-        <v-btn color="primary mt-3 mb-4" @click="addVehicle" elevation="0"
+        <v-btn
+          color="primary mt-3 mb-4"
+          @click="clickAddVehicle"
+          elevation="0"
+          v-show="!addingVehicle"
           ><v-icon class="mr-2">mdi-plus</v-icon>Add Vehicle</v-btn
         >
       </v-layout>
+
+      <!-- Subscriptions -->
+
       <v-layout row align="center">
         <v-icon class="mt-9 mr-1">mdi-license</v-icon>
         <div class="text-h5 account-info-header profile-section">
@@ -123,6 +175,9 @@
           />
         </v-layout>
       </div>
+
+      <!-- Purchase History -->
+
       <v-layout row align="center">
         <v-icon class="mt-9 mr-1">mdi-history</v-icon>
         <div class="text-h5 account-info-header profile-section">
@@ -178,9 +233,13 @@ export default {
   data() {
     return {
       customerInfo: {},
+      addVehicleFormValid: false,
+      editVehicleFormValid: false,
       subscriptions: [],
       editedVehicle: {},
       editedVehicleIndex: null,
+      addingVehicle: false,
+      addedVehicle: {},
       lorem:
         "Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod.",
     };
@@ -193,6 +252,9 @@ export default {
     // Execute code after the component is mounted
   },
   methods: {
+    required(v) {
+      return !!v || "Field is required";
+    },
     load() {
       this.loadCustomerInfo();
       this.loadSubscriptions();
@@ -221,7 +283,14 @@ export default {
       );
     },
     addVehicle() {
-      console.log("add vehicle");
+      this.$store.commit("addVehicle", JSON.stringify(this.addedVehicle));
+      this.addingVehicle = false;
+      this.customerInfo.vehicles.push(this.addedVehicle);
+      this.addedVehicle = {};
+    },
+    cancelAddVehicle() {
+      this.addingVehicle = false;
+      this.addedVehicle = {};
     },
     removeSubscription(index) {
       this.customerInfo.vehicles[index].subscription = null;
@@ -243,6 +312,20 @@ export default {
     },
     getVehicleFromID(id) {
       return this.customerInfo.vehicles.find((vehicle) => vehicle.id === id);
+    },
+    clickAddVehicle() {
+      this.addingVehicle = true;
+      //set addedVehicle to object with default values
+      this.addedVehicle = {
+        id: this.customerInfo.vehicles.length + 1,
+        year: null,
+        make: null,
+        model: null,
+        color: null,
+        licensePlate: null,
+        subscription: null,
+      };
+      this.$refs.addVehicleForm.validate();
     },
   },
 

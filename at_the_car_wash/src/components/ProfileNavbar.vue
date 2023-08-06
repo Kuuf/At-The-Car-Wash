@@ -42,11 +42,11 @@ export default {
   components: {
     NavbarButton,
   },
-  props: {},
+  props: { isMobile: { type: Boolean, required: false, default: false } },
   mixins: [functions],
   data() {
     return {
-      selectedSection: 0,
+      selectedSection: this.isMobile ? null : 0,
     };
   },
   computed: {
@@ -58,7 +58,9 @@ export default {
   },
   methods: {
     goToComponent(id) {
-      this.selectedSection = id;
+      if (!this.isMobile) {
+        this.selectedSection = id;
+      }
       this.$emit("select-header", id);
     },
     changeActiveHeader(index) {

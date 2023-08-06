@@ -192,6 +192,14 @@ const store = createStore({
     increment(state) {
       state.count++;
     },
+    addVehicle(state, customerID, newVehicle) {
+      const customer = state.customers.find(
+        (customer) => customer.info.id === customerID
+      );
+      if (customer) {
+        customer.vehicles.push(newVehicle);
+      }
+    },
     editCustomer(state, updatedCustomer) {
       updatedCustomer = JSON.parse(updatedCustomer);
       console.log(updatedCustomer);

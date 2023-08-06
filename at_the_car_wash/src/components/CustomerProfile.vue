@@ -51,7 +51,7 @@
       state: "CA",
     -->
     <v-col sm="12" md="4" v-if="isMobile">
-      <Navbar @select-header="navigateToProfileHeader" />
+      <Navbar @select-header="navigateToProfileHeader" isMobile />
     </v-col>
     <v-row class="pa-3 mt-0">
       <!-- navbar -->
