@@ -18,6 +18,23 @@ const store = createStore({
     return {
       mobileThreshold: 600,
       count: 0,
+      subscriptions: [
+        {
+          id: 1,
+          name: "Gold Membership",
+          price: 12.99,
+        },
+        {
+          id: 2,
+          name: "Silver Membership",
+          price: 9.99,
+        },
+        {
+          id: 3,
+          name: "Bronze Membership",
+          price: 6.99,
+        },
+      ],
       customers: [
         // John Doe
         {
@@ -38,6 +55,7 @@ const store = createStore({
               year: 2015,
               color: "Black",
               licensePlate: "ABC123",
+              subscription: 3,
             },
             {
               id: 2,
@@ -46,14 +64,7 @@ const store = createStore({
               year: 2024,
               color: "Brown",
               licensePlate: "RTF6738",
-            },
-          ],
-          subscriptions: [
-            {
-              id: 1,
-              name: "Gold Membership",
-              price: 12.99,
-              vehicle: 1,
+              subscription: 1,
             },
           ],
           purchaseHistory: [
@@ -61,16 +72,19 @@ const store = createStore({
               id: 1,
               name: "Wash",
               price: 19.99,
+              date: "2021-01-01",
             },
             {
               id: 2,
               name: "Wax & Wash",
               price: 29.99,
+              date: "2023-04-04",
             },
             {
               id: 1,
               name: "Wax",
               price: 19.99,
+              date: "2021-06-04",
             },
           ],
         },
@@ -92,14 +106,7 @@ const store = createStore({
               year: 2015,
               color: "Black",
               licensePlate: "ABC123",
-            },
-          ],
-          subscriptions: [
-            {
-              id: 1,
-              name: "Gold Membership",
-              price: 12.99,
-              vehicle: 1,
+              subscription: 2,
             },
           ],
           purchaseHistory: [
@@ -138,14 +145,7 @@ const store = createStore({
               year: 2015,
               color: "Black",
               licensePlate: "ABC123",
-            },
-          ],
-          subscriptions: [
-            {
-              id: 1,
-              name: "Gold Membership",
-              price: 12.99,
-              vehicle: 1,
+              subscription: 3,
             },
           ],
           purchaseHistory: [
@@ -153,16 +153,19 @@ const store = createStore({
               id: 1,
               name: "Wash",
               price: 19.99,
+              date: "2021-4-04",
             },
             {
               id: 2,
               name: "Wax & Wash",
               price: 29.99,
+              date: "2021-11-04",
             },
             {
               id: 1,
               name: "Wax",
               price: 19.99,
+              date: "2021-04-12",
             },
           ],
         },
@@ -238,6 +241,12 @@ const store = createStore({
     },
     getMobileThreshold(state) {
       return state.mobileThreshold;
+    },
+    getSubscription(state, id) {
+      return state.subscriptions.find((subscription) => subscription.id === id);
+    },
+    getSubscriptions(state) {
+      return state.subscriptions;
     },
   },
 });
