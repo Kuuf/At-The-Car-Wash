@@ -142,7 +142,7 @@
         <div class="text-caption">
           {{ purchase.name }}: ${{ purchase.price }}
         </div>
-        <v-divider class="mt-4 mb-4" style="width: 50%" />
+        <div class="dotted-divider"></div>
       </div>
       <v-layout row align="center">
         <v-icon class="mt-9 mr-1">mdi-airballoon</v-icon>
@@ -151,7 +151,9 @@
         </div>
       </v-layout>
       <v-divider class="mb-4 mt-4" />
-      <div class="text-body-3">{{ lorem }}</div>
+      <v-text-field label="Lorem Ipsum" />
+      <v-text-field label="Lorem Ipsum" />
+      <v-text-field label="Lorem Ipsum" />
     </div>
   </div>
 </template>

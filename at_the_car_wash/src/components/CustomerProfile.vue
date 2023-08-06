@@ -149,7 +149,7 @@ export default {
         if (profileSections && profileSections.length > headerIndex) {
           // Convert the HTMLCollection to an array and get the element at the specified index
           var element = Array.from(profileSections)[headerIndex];
-          const yOffset = this.isMobile ? -80 : -180;
+          const yOffset = this.isMobile ? -90 : -160;
           const y =
             element.getBoundingClientRect().top +
             customerInfoWindow.scrollTop +
