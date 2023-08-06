@@ -5,7 +5,6 @@
     <div class="app">
       <router-view />
     </div>
-    <snackbar />
   </v-app>
 </template>
 

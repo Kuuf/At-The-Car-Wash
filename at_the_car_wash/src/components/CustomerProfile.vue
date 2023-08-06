@@ -56,7 +56,7 @@
     <v-row class="pa-3 mt-0">
       <!-- navbar -->
       <v-col sm="12" md="4" v-if="!isMobile">
-        <Navbar @select-header="navigateToProfileHeader" />
+        <Navbar ref="navbar" @select-header="navigateToProfileHeader" />
       </v-col>
       <!-- info -->
       <v-col sm="12" md="8">
@@ -105,6 +105,7 @@ export default {
     return {
       customerInfo: [],
       fullscreen: false,
+      autoScrolling: false,
     };
   },
   computed: {
@@ -113,7 +114,14 @@ export default {
   },
   created() {},
   mounted() {
-    // Execute code after the component is mounted
+    document
+      .getElementsByClassName("info-scroll-window")[0]
+      .addEventListener("scroll", this.handleScroll);
+  },
+  beforeUnmount() {
+    document
+      .getElementsByClassName("info-scroll-window")[0]
+      .removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     loadCustomerInfo() {
@@ -139,6 +147,7 @@ export default {
       this.$emit("toggleFullScreen");
     },
     navigateToProfileHeader(headerIndex) {
+      this.autoScrolling = true;
       this.$nextTick(() => {
         console.log(headerIndex);
         let profileSections =
@@ -162,6 +171,30 @@ export default {
           }
         }
       });
+      this.autoScrolling = false;
+    },
+    handleScroll() {
+      if (!this.autoScrolling) {
+        let profileSections =
+          document.getElementsByClassName("profile-section");
+        let activeHeader = 0;
+        for (let i = 0; i < profileSections.length; i++) {
+          let inView = this.isScrolledIntoView(profileSections[i]);
+          if (inView) {
+            activeHeader = i;
+          }
+        }
+        if (!this.isMobile) {
+          this.updateNavBar(activeHeader);
+        }
+      }
+    },
+    updateNavBar(index) {
+      this.$refs["navbar"].changeActiveHeader(index);
+    },
+    isScrolledIntoView(el) {
+      var rect = el.getBoundingClientRect();
+      return rect.top < 300;
     },
   },
 

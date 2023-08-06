@@ -46,7 +46,7 @@ export default {
   mixins: [functions],
   data() {
     return {
-      selectedSection: 1,
+      selectedSection: 0,
     };
   },
   computed: {
@@ -60,6 +60,9 @@ export default {
     goToComponent(id) {
       this.selectedSection = id;
       this.$emit("select-header", id);
+    },
+    changeActiveHeader(index) {
+      this.selectedSection = index;
     },
   },
 
