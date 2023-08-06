@@ -44,23 +44,41 @@
         v-for="(vehicle, index) in customerInfo.vehicles"
         :key="vehicle.id"
       >
-        <v-col
-          sm="12"
-          md="6"
-          v-for="(value, key, index) in vehicle"
-          :key="index"
-        >
-          <v-text-field
-            v-if="key != 'subscription'"
-            :value="value"
-            v-model="vehicle[key]"
-            :readonly="fieldDisabled(key)"
-          >
-            <template v-slot:label>
-              <div class="info-label">{{ key }}</div>
-            </template>
-          </v-text-field>
+        <div v-if="editedVehicleIndex == index && editedVehicleIndex != null">
+          <v-row>
+            <v-col
+              sm="12"
+              md="6"
+              v-for="(value, key, index) in editedVehicle"
+              :key="index"
+            >
+              <v-text-field
+                v-if="key != 'subscription'"
+                :value="value"
+                v-model="editedVehicle[key]"
+                :readonly="fieldDisabled(key)"
+              >
+                <template v-slot:label>
+                  <div class="info-label">{{ key }}</div>
+                </template>
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <v-layout row align="center">
+            <v-btn @click="cancelEditVehicle" elevation="0">Cancel</v-btn>
+            <v-btn color="primary" @click="saveVehicle(index)" elevation="0"
+              >Save</v-btn
+            >
+          </v-layout>
+        </div>
+        <v-col sm="12" v-else>
+          <v-layout row align="center">
+            {{ concatVehicleInfo(vehicle) }}
+            <v-spacer />
+            <v-btn flat icon="mdi-pencil" @click="editVehicle(index)"></v-btn>
+          </v-layout>
         </v-col>
+
         <v-divider
           v-if="index < customerInfo.vehicles.length - 1"
           class="mb-4"
@@ -147,6 +165,8 @@ export default {
     return {
       customerInfo: {},
       subscriptions: [],
+      editedVehicle: {},
+      editedVehicleIndex: null,
       lorem:
         "Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod.",
     };
@@ -179,7 +199,7 @@ export default {
       this.$store.commit("editCustomer", JSON.stringify(this.customerInfo));
     },
     concatVehicleInfo(vehicle) {
-      return `${vehicle.year} ${vehicle.color} ${vehicle.make} ${vehicle.model}`;
+      return `${vehicle.year} ${vehicle.color} ${vehicle.make} ${vehicle.model} ${vehicle.licensePlate}`;
     },
     getVehicleFromSubscription(subscription) {
       return this.customerInfo.vehicles.find(
@@ -191,6 +211,21 @@ export default {
     },
     removeSubscription(index) {
       this.customerInfo.vehicles[index].subscription = null;
+    },
+    editVehicle(index) {
+      this.editedVehicle = { ...this.customerInfo.vehicles[index] };
+      this.editedVehicleIndex = index;
+    },
+    saveVehicle(index) {
+      this.customerInfo.vehicles[index] = JSON.parse(
+        JSON.stringify(this.editedVehicle)
+      );
+      this.editedVehicle = null;
+      this.editedVehicleIndex = null;
+    },
+    cancelEditVehicle() {
+      this.editedVehicle = null;
+      this.editedVehicleIndex = null;
     },
   },
 
