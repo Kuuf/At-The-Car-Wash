@@ -13,23 +13,54 @@
       state: "CA",
     -->
 
-    <div>
+    <div class="customer-info">
       <div class="text-h5 profile-section">Account Info</div>
       <v-divider class="mb-4 mt-1" />
-      <v-text-field
-        v-for="(value, key) in customerInfo.info"
-        :key="key"
-        :value="value"
-        v-model="customerInfo.info[key]"
-        :readonly="fieldDisabled(key)"
-      >
-        <template v-slot:label>
-          <div class="info-label">{{ key }}</div>
-        </template>
-      </v-text-field>
-      <div class="text-h5 account-info-header profile-section">Vehicles</div>
+      <div v-for="(value, key) in customerInfo.info" :key="key">
+        <div class="text-caption" style="text-transform: capitalize !important">
+          {{ key }}
+        </div>
+        <v-text-field
+          :value="value"
+          v-model="customerInfo.info[key]"
+          :readonly="fieldDisabled(key)"
+        />
+      </div>
+      <v-layout row align="center">
+        <div class="text-h5 account-info-header profile-section">Vehicles</div>
+        <v-spacer />
+        <v-btn color="primary mt-3" @click="addVehicle"
+          ><v-icon class="mr-2">mdi-plus</v-icon>Add Vehicle</v-btn
+        >
+      </v-layout>
+
       <v-divider class="mb-4 mt-1" />
-      <div class="text-body-3">{{ lorem }}</div>
+      <v-row
+        v-for="(vehicle, index) in customerInfo.vehicles"
+        :key="vehicle.id"
+      >
+        <v-col
+          sm="12"
+          md="6"
+          v-for="(value, key, index) in vehicle"
+          :key="index"
+        >
+          <v-text-field
+            :value="value"
+            v-model="vehicle[key]"
+            :readonly="fieldDisabled(key)"
+          >
+            <template v-slot:label>
+              <div class="info-label">{{ key }}</div>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-divider
+          v-if="index < customerInfo.vehicles.length - 1"
+          class="mb-4"
+        />
+      </v-row>
+
       <div class="text-h5 account-info-header profile-section">
         Subscriptions
       </div>
@@ -89,7 +120,7 @@ export default {
     },
     updateCustomerInfo() {
       console.log(this.customerInfo);
-      this.$store.commit("editCustomerInfo", JSON.stringify(this.customerInfo));
+      this.$store.commit("editCustomer", JSON.stringify(this.customerInfo));
     },
   },
 
@@ -99,12 +130,6 @@ export default {
     },
     customerID() {
       this.loadCustomerInfo();
-    },
-    customerInfo: {
-      handler() {
-        this.$emit("madeChanges");
-      },
-      deep: true,
     },
   },
 };

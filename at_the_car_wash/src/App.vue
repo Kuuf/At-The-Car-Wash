@@ -5,11 +5,22 @@
     <div class="app">
       <router-view />
     </div>
+    <snackbar />
   </v-app>
 </template>
 
-<script setup>
+<script>
 import AppBar from "./components/AppBar.vue";
+
+export default {
+  components: {
+    AppBar,
+  },
+  data() {
+    return {};
+  },
+  computed: {},
+};
 </script>
 
 <style scoped>

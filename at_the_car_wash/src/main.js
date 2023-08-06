@@ -39,6 +39,14 @@ const store = createStore({
               color: "Black",
               licensePlate: "ABC123",
             },
+            {
+              id: 2,
+              make: "Volkswagen",
+              model: "Jetta",
+              year: 2024,
+              color: "Brown",
+              licensePlate: "RTF6738",
+            },
           ],
           subscriptions: [
             {
@@ -165,14 +173,18 @@ const store = createStore({
     increment(state) {
       state.count++;
     },
-    editCustomerInfo(state, updatedCustomer) {
+    editCustomer(state, updatedCustomer) {
       updatedCustomer = JSON.parse(updatedCustomer);
       console.log(updatedCustomer);
       const customer = state.customers.find(
         (customer) => customer.info.id === updatedCustomer.info.id
       );
+      //set the entire customer object in the state to the updatedCustomer
       if (customer) {
-        customer.info = { ...customer.info, ...updatedCustomer.info };
+        customer.info = updatedCustomer.info;
+        customer.vehicles = updatedCustomer.vehicles;
+        customer.subscriptions = updatedCustomer.subscriptions;
+        customer.purchaseHistory = updatedCustomer.purchaseHistory;
       }
     },
     addCustomerSubscription(state, id, subscription) {

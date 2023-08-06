@@ -68,3 +68,7 @@
 .account-info-header {
   margin-top: 16px;
 }
+
+.customer-info {
+  width: calc(100% - 16px);
+}
