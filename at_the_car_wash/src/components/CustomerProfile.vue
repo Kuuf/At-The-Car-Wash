@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+    :class="profilePageGoMobile && !isMobile ? 'overflow-scroll-medium' : ''"
+  >
     <!-- mobile toolbar -->
     <v-row v-if="isMobile" class="pa-5 pb-0">
       <v-btn
@@ -10,7 +12,10 @@
       />
     </v-row>
     <!-- toolbar -->
-    <v-row align="center" class="overflow-scroll pa-6 pb-0">
+    <v-row
+      align="center"
+      :class="['overflow-scroll pb-0 pa-6', isMobile ? 'pt-0' : '']"
+    >
       <div class="pa-3">
         <div class="text-h5">
           {{ customerSelected && customerInfo ? customerInfo.info.name : "" }}
@@ -56,18 +61,21 @@
       city: "Anytown",
       state: "CA",
     -->
-    <v-col sm="12" md="4" v-if="isMobile">
+    <v-col sm="12" md="4" v-if="profilePageGoMobile">
       <Navbar @select-header="navigateToProfileHeader" isMobile />
     </v-col>
     <v-row class="pa-3 mt-0">
       <!-- navbar -->
-      <v-col sm="12" md="4" v-if="!isMobile">
+      <v-col sm="12" md="4" v-if="!profilePageGoMobile">
         <Navbar ref="navbar" @select-header="navigateToProfileHeader" />
       </v-col>
       <!-- info -->
       <v-col sm="12" md="8">
         <div
-          :class="['info-scroll-window', !isMobile ? 'overflow-scroll' : '']"
+          :class="[
+            'info-scroll-window',
+            !profilePageGoMobile ? 'overflow-scroll' : '',
+          ]"
         >
           <CustomerInfo
             ref="customerInfo"
@@ -114,6 +122,8 @@ export default {
       fullscreen: false,
       autoScrolling: false,
       canSaveProfile: true,
+      profilePageGoMobile: false,
+      profilePageMobileThreshold: 960,
     };
   },
   computed: {
@@ -125,11 +135,15 @@ export default {
     document
       .getElementsByClassName("info-scroll-window")[0]
       .addEventListener("scroll", this.handleScroll);
+    this.profilePageGoMobile =
+      window.innerWidth < this.profilePageMobileThreshold;
+    window.addEventListener("resize", this.handleResize);
   },
   beforeUnmount() {
     document
       .getElementsByClassName("info-scroll-window")[0]
       .removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("resize", this.handleResize);
   },
   methods: {
     loadCustomerInfo() {
@@ -158,7 +172,10 @@ export default {
     updateProfileCanSave(canSave) {
       this.canSaveProfile = canSave;
     },
-
+    handleResize() {
+      this.profilePageGoMobile =
+        window.innerWidth < this.profilePageMobileThreshold;
+    },
     navigateToTopOfProfile() {
       let customerInfoWindow =
         document.getElementsByClassName("info-scroll-window")[0];
@@ -241,6 +258,11 @@ export default {
 <style scoped>
 .overflow-scroll {
   overflow-y: auto;
-  max-height: calc(100vh - 185px);
+  max-height: 75vh;
+}
+.overflow-scroll-medium {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 62px);
 }
 </style>

@@ -137,6 +137,6 @@ export default {
 }
 .overflow-scroll {
   overflow-y: auto;
-  max-height: calc(100vh - 204px);
+  max-height: calc(100vh - 155px);
 }
 </style>
