@@ -6,8 +6,6 @@
     <v-app-bar-title> {{ currentModule }}</v-app-bar-title>
     <v-spacer />
     <v-btn icon="mdi-account-search-outline" color="primary"> </v-btn>
-    <v-btn icon="mdi-chart-line"> </v-btn>
-    <v-btn icon="mdi-archive-outline"> </v-btn>
   </v-app-bar>
 </template>
 
