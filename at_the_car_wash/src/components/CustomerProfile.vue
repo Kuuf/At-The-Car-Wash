@@ -134,6 +134,7 @@ export default {
   methods: {
     loadCustomerInfo() {
       this.customerInfo = this.getCustomerInfo(this.customerID);
+      this.navigateToTopOfProfile();
     },
     updateProfile() {
       this.$refs["customerInfo"].updateCustomerInfo();
@@ -156,6 +157,23 @@ export default {
     },
     updateProfileCanSave(canSave) {
       this.canSaveProfile = canSave;
+    },
+
+    navigateToTopOfProfile() {
+      let customerInfoWindow =
+        document.getElementsByClassName("info-scroll-window")[0];
+      let profileSections = document.getElementsByClassName("profile-section");
+      let element = Array.from(profileSections)[0];
+      const yOffset = this.isMobile ? -90 : -160;
+      const y =
+        element.getBoundingClientRect().top +
+        customerInfoWindow.scrollTop +
+        yOffset;
+      if (!this.isMobile) {
+        customerInfoWindow.scrollTo({ top: y, behavior: "instant" });
+      } else {
+        window.scrollTo({ top: y, behavior: "instant" });
+      }
     },
 
     navigateToProfileHeader(headerIndex) {
