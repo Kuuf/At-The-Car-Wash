@@ -1,7 +1,7 @@
 // store.js
 
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from "./node_modules/vue/dist/vue";
+import Vuex from "./node_modules/vuex/types/index";
 
 Vue.use(Vuex);
 
