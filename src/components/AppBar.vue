@@ -16,6 +16,8 @@ export default {
       currentModule: "Customer Dashboard",
     };
   },
-  methods: {},
+  methods: {
+    test() {},
+  },
 };
 </script>

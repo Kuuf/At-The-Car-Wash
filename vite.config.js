@@ -8,6 +8,7 @@ import { fileURLToPath, URL } from "node:url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/At-The-Car-Wash/",
   plugins: [
     vue({
       template: { transformAssetUrls },

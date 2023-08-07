@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: "/",
+    path: "/At-The-Car-Wash/",
     component: () => import("@/views/HomePage.vue"),
     children: [],
   },
