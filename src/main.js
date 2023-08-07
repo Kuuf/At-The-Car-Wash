@@ -76,9 +76,6 @@ const store = createStore({
     };
   },
   mutations: {
-    increment(state) {
-      state.count++;
-    },
     editCustomer(state, updatedCustomer) {
       updatedCustomer = JSON.parse(updatedCustomer);
       const customer = state.generatedCustomers.find(
