@@ -25,9 +25,9 @@
       @click="goToComponent(3)"
     />
     <NavbarButton
-      label="Lorem Ipsum"
+      label="Account Settings"
       :isSelected="selectedSection === 4"
-      icon="mdi-airballoon"
+      icon="mdi-cog"
       @click="goToComponent(4)"
     />
   </div>

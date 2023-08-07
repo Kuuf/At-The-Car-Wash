@@ -39,6 +39,20 @@ const store = createStore({
           price: 6.99,
         },
       ],
+      accountStatuses: [
+        {
+          id: 1,
+          name: "Active",
+        },
+        {
+          id: 2,
+          name: "Cancelled",
+        },
+        {
+          id: 3,
+          name: "Overdue",
+        },
+      ],
       customers: [
         // John Doe
         {
@@ -51,6 +65,7 @@ const store = createStore({
             city: "Anytown",
             state: "CA",
           },
+          status: 1,
           vehicles: [
             {
               id: 1,
@@ -105,6 +120,7 @@ const store = createStore({
             city: "Anytown",
             state: "CA",
           },
+          status: 2,
           vehicles: [
             {
               id: 1,
@@ -150,6 +166,7 @@ const store = createStore({
             city: "Anytown",
             state: "CA",
           },
+          status: 3,
           vehicles: [
             {
               id: 1,
@@ -191,32 +208,6 @@ const store = createStore({
   mutations: {
     increment(state) {
       state.count++;
-    },
-    test(state, a, b) {
-      console.log(a);
-      console.log(b);
-    },
-    addVehicle(state, customerID, newVehicle) {
-      console.log(customerID);
-      const customer = state.customers.find(
-        (customer) => customer.info.id === customerID
-      );
-      if (customer) {
-        customer.vehicles.push(newVehicle);
-      }
-    },
-    deleteVehicle(state, customerID, index) {
-      const customer = state.customers.find(
-        (customer) => customer.info.id === customerID
-      );
-      // set vehicle is_deleted to true
-      if (customer) {
-        console.log(customer);
-        console.log(customer.vehicles);
-        console.log(index);
-        console.log(customer.vehicles[index]);
-        customer.vehicles[index]["is_deleted"] = true;
-      }
     },
     editCustomer(state, updatedCustomer) {
       updatedCustomer = JSON.parse(updatedCustomer);

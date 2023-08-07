@@ -243,16 +243,15 @@
           <div class="dotted-divider"></div>
         </div>
         <v-layout row align="center">
-          <v-icon class="mt-9 mr-1">mdi-airballoon</v-icon>
+          <v-icon class="mt-9 mr-1">mdi-cog</v-icon>
           <div class="text-h5 account-info-header profile-section">
-            Lorem Ipsum
+            Account Settings
           </div>
         </v-layout>
         <v-divider class="mb-4 mt-4" />
-        <v-text-field label="Lorem Ipsum" />
-        <v-text-field label="Lorem Ipsum" />
-        <v-text-field label="Lorem Ipsum" />
+        <v-btn>Cancel Account</v-btn>
       </div>
+      <div style="height: 400px; width: 50px"></div>
     </v-form>
   </div>
 </template>
