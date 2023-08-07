@@ -9,13 +9,13 @@
 
   <body>
     <div id="app"></div>
-    <script type="module" src="src/main.js"></script>
+    <script type="module" src="/src/main.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Check if the website is running on GitHub Pages
         if (window.location.hostname === "kuuf.github.io") {
           // Use the absolute path for GitHub Pages deployment
-          document.querySelector("script[src='main.js']").src =
+          document.querySelector("script[src='/src/main.js']").src =
             "/At-The-Car-Wash/src/main.js";
         }
       });
