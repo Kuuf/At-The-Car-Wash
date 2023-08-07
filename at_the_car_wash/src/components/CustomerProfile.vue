@@ -22,8 +22,14 @@
       </div>
 
       <v-spacer />
-      <v-btn flat color="primary" class="mr-2" @click="updateProfile"
-        >Save Changes</v-btn
+      <v-btn
+        flat
+        color="primary"
+        class="mr-2"
+        @click="updateProfile"
+        :disabled="!canSaveProfile"
+      >
+        Save Changes</v-btn
       >
       <v-btn
         v-show="customerSelected && !isMobile"
@@ -67,6 +73,7 @@
             ref="customerInfo"
             :customerSelected="customerSelected"
             :customerID="customerID"
+            @setCanSaveCustomerProfile="updateProfileCanSave"
           />
         </div>
       </v-col>
@@ -106,6 +113,7 @@ export default {
       customerInfo: [],
       fullscreen: false,
       autoScrolling: false,
+      canSaveProfile: true,
     };
   },
   computed: {
@@ -146,6 +154,10 @@ export default {
       this.fullscreen = !this.fullscreen;
       this.$emit("toggleFullScreen");
     },
+    updateProfileCanSave(canSave) {
+      this.canSaveProfile = canSave;
+    },
+
     navigateToProfileHeader(headerIndex) {
       this.autoScrolling = true;
       this.$nextTick(() => {
