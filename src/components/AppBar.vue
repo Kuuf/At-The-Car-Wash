@@ -16,10 +16,6 @@ export default {
       currentModule: "Customer Dashboard",
     };
   },
-  methods: {
-    changeModule(name) {
-      this.currentModule = name;
-    },
-  },
+  methods: {},
 };
 </script>
