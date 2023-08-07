@@ -15,7 +15,7 @@
             v-model="customerInfo.info[key]"
             :readonly="fieldDisabled(key)"
             ><template v-slot:label>
-              <div class="info-label">{{ key }}</div>
+              <div class="capitalize">{{ key }}</div>
             </template>
           </v-text-field>
         </div>
@@ -55,7 +55,7 @@
                   :rules="[required]"
                 >
                   <template v-slot:label>
-                    <div class="info-label">{{ key }}</div>
+                    <div class="capitalize">{{ key }}</div>
                   </template>
                 </v-text-field>
               </div>
@@ -80,11 +80,12 @@
 
             <v-layout row class="text-left" v-else>
               <div>
-                <div class="text-h7">
+                <div class="text-h7 capitalize">
                   {{ vehicle.color }} {{ vehicle.make }} {{ vehicle.model }}
                 </div>
                 <div class="text-caption font-weight-light">
-                  {{ vehicle.year }}, {{ vehicle.licensePlate }}
+                  {{ vehicle.year }}, {{ vehicle.licensePlate }}, ID:
+                  {{ vehicle.id }}
                 </div>
               </div>
               <v-spacer />
@@ -141,7 +142,7 @@
                 :readonly="fieldDisabled(key)"
               >
                 <template v-slot:label>
-                  <div class="info-label">{{ key }}</div>
+                  <div class="capitalize">{{ key }}</div>
                 </template>
               </v-text-field>
             </div>
@@ -189,9 +190,12 @@
           :key="vehicle.id"
         >
           <div v-if="!vehicle.is_deleted">
-            <div class="text-caption">Vehicle {{ vehicle.id }}</div>
-            <div class="text-body1">
-              {{ concatVehicleInfo(vehicle) }}
+            <div class="text-h7 capitalize">
+              {{ vehicle.color }} {{ vehicle.make }} {{ vehicle.model }}
+            </div>
+            <div class="text-caption font-weight-light">
+              {{ vehicle.year }}, {{ vehicle.licensePlate }}, ID:
+              {{ vehicle.id }}
             </div>
           </div>
           <v-spacer />
@@ -229,17 +233,17 @@
         </v-layout>
         <v-divider class="mb-4 mt-4" />
         <div v-for="purchase in customerInfo.purchaseHistory" :key="purchase">
-          <v-layout sm="6">
-            <div class="text-body-3 mr-1">
-              {{ purchase.date }}
-            </div>
-          </v-layout>
-          <div class="text-caption">
-            {{ concatVehicleInfo(getVehicleFromID(purchase.vehicle)) }}
-          </div>
-          <div class="text-caption">
+          <div class="text-body-3">
             {{ purchase.name }}: ${{ purchase.price }}
           </div>
+
+          <div class="text-caption">
+            {{ purchase.date }}
+          </div>
+          <div class="text-caption capitalize">
+            {{ concatVehicleInfo(getVehicleFromID(purchase.vehicle)) }}
+          </div>
+
           <div class="dotted-divider"></div>
         </div>
         <v-layout row align="center">
@@ -368,6 +372,8 @@ export default {
       this.editedVehicleIndex = null;
     },
     getVehicleFromID(id) {
+      console.log(id);
+      console.log(this.customerInfo.vehicles);
       return this.customerInfo.vehicles.find((vehicle) => vehicle.id === id);
     },
     clickAddVehicle() {
@@ -400,7 +406,7 @@ export default {
 };
 </script>
 <style scoped>
-.info-label {
-  text-transform: capitalize;
+.capitalize {
+  text-transform: capitalize !important;
 }
 </style>

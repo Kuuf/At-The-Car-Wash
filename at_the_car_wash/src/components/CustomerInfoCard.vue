@@ -14,7 +14,7 @@
         city: "Anytown",
         state: "CA",
       -->
-    <v-layout row align="center" justify="left">
+    <v-layout row align="center" justify="left" class="text-left">
       <div class="text-h7 bold text-primary">{{ customerInfo.name }}</div>
       <v-spacer />
       <div class="text-caption-1 font-weight-light">

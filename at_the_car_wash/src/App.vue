@@ -19,6 +19,9 @@ export default {
     return {};
   },
   computed: {},
+  created() {
+    this.$store.commit("generateCustomers");
+  },
 };
 </script>
 

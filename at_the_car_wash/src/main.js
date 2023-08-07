@@ -12,10 +12,13 @@ import { createApp } from "vue";
 import { createStore } from "vuex";
 import "./style.css";
 
+import { faker } from "@faker-js/faker";
+
 // Create a new store instance.
 const store = createStore({
   state() {
     return {
+      generatedCustomers: {},
       mobileThreshold: 600,
       count: 0,
       subscriptions: [
@@ -53,154 +56,21 @@ const store = createStore({
           name: "Overdue",
         },
       ],
-      customers: [
-        // John Doe
+      purchases: [
         {
-          info: {
-            id: 4723819056,
-            name: "John Doe",
-            email: "john@gmail.com",
-            phone: "123-456-7890",
-            address: "1234 Main St",
-            city: "Anytown",
-            state: "CA",
-          },
-          status: 1,
-          vehicles: [
-            {
-              id: 1,
-              make: "Honda",
-              model: "Civic",
-              year: 2015,
-              color: "Black",
-              licensePlate: "ABC123",
-              subscription: 3,
-            },
-            {
-              id: 2,
-              make: "Volkswagen",
-              model: "Jetta",
-              year: 2024,
-              color: "Brown",
-              licensePlate: "RTF6738",
-              subscription: 1,
-            },
-          ],
-          purchaseHistory: [
-            {
-              id: 1,
-              name: "Wash",
-              price: 19.99,
-              date: "2021/01/01",
-              vehicle: 1,
-            },
-            {
-              id: 2,
-              name: "Wax & Wash",
-              price: 29.99,
-              date: "2023/04/04",
-              vehicle: 2,
-            },
-            {
-              id: 1,
-              name: "Wax",
-              price: 19.99,
-              date: "2021/06/04",
-              vehicle: 1,
-            },
-          ],
+          id: 1,
+          name: "Wash",
+          price: 19.99,
         },
         {
-          info: {
-            id: 957389267,
-            name: "Jane Doe",
-            email: "jane@gmail.com",
-            phone: "123-456-7890",
-            address: "1234 Main St",
-            city: "Anytown",
-            state: "CA",
-          },
-          status: 2,
-          vehicles: [
-            {
-              id: 1,
-              make: "Honda",
-              model: "Civic",
-              year: 2015,
-              color: "Black",
-              licensePlate: "ABC123",
-              subscription: 2,
-            },
-          ],
-          purchaseHistory: [
-            {
-              id: 1,
-              name: "Wash",
-              price: 19.99,
-              date: "2021/06/04",
-              vehicle: 1,
-            },
-            {
-              id: 2,
-              name: "Wax & Wash",
-              price: 29.99,
-              date: "2021/08/12",
-              vehicle: 1,
-            },
-            {
-              id: 1,
-              name: "Wax",
-              price: 19.99,
-              date: "2021/04/04",
-              vehicle: 1,
-            },
-          ],
+          id: 2,
+          name: "Wax & Wash",
+          price: 25.99,
         },
         {
-          info: {
-            id: 5672946578,
-            name: "George Doe",
-            email: "george@gmail.com",
-            phone: "123-456-7890",
-            address: "1234 Main St",
-            city: "Anytown",
-            state: "CA",
-          },
-          status: 3,
-          vehicles: [
-            {
-              id: 1,
-              make: "Honda",
-              model: "Civic",
-              year: 2015,
-              color: "Black",
-              licensePlate: "ABC123",
-              subscription: 3,
-            },
-          ],
-          purchaseHistory: [
-            {
-              id: 1,
-              name: "Wash",
-              price: 19.99,
-              date: "2021/4/04",
-              vehicle: 1,
-            },
-            {
-              id: 2,
-              name: "Wax & Wash",
-              price: 29.99,
-              date: "2021/11/04",
-              vehicle: 1,
-            },
-            {
-              id: 1,
-              name: "Wax",
-              price: 19.99,
-              date: "2021/04/12",
-              vehicle: 1,
-            },
-          ],
+          id: 1,
+          name: "Wax",
+          price: 19.99,
         },
       ],
     };
@@ -211,8 +81,7 @@ const store = createStore({
     },
     editCustomer(state, updatedCustomer) {
       updatedCustomer = JSON.parse(updatedCustomer);
-      console.log(updatedCustomer);
-      const customer = state.customers.find(
+      const customer = state.generatedCustomers.find(
         (customer) => customer.info.id === updatedCustomer.info.id
       );
       //set the entire customer object in the state to the updatedCustomer
@@ -223,19 +92,92 @@ const store = createStore({
         customer.purchaseHistory = updatedCustomer.purchaseHistory;
       }
     },
+    generateCustomers(state) {
+      console.log("generating customers");
+      let numCustomers = 100;
+      let customers = [];
+
+      for (let i = 0; i < numCustomers; i++) {
+        let numPurchases = faker.number.int({ min: 1, max: 10 });
+        let numVehicles = faker.number.int({ min: 1, max: 3 });
+
+        // Get customer info
+        let info = {
+          id: faker.number.int({ min: 1, max: 10000000 }),
+          name: faker.person.fullName(),
+          email: faker.internet.email(),
+          phone: faker.phone.number(),
+          address: faker.location.streetAddress(),
+          city: faker.location.city(),
+          state: faker.location.state(),
+        };
+
+        // Generate vehicles
+        let vehicles = Array.from({ length: numVehicles }, () => ({
+          id: faker.number.int({ min: 1, max: 10000000 }),
+          make: faker.vehicle.manufacturer(),
+          model: faker.vehicle.model(),
+          color: faker.vehicle.color(),
+          licensePlate: faker.vehicle.vrm(),
+          subscription: faker.number.int({ min: 1, max: 3 }),
+          year: 2015,
+        }));
+
+        // Generate purchase history
+        let purchaseHistory = [];
+        for (let k = 0; k < numPurchases; k++) {
+          const randomVehicleIndex = faker.number.int({
+            min: 0,
+            max: numVehicles - 1,
+          });
+          const vehicleID = vehicles[randomVehicleIndex].id;
+
+          let purchase = JSON.parse(
+            JSON.stringify(
+              state.purchases[
+                faker.number.int({ min: 0, max: state.purchases.length - 1 })
+              ]
+            )
+          );
+
+          // Create a new object for purchase.vehicle
+          purchase.vehicle = vehicleID;
+          purchase.date = faker.date.past().toString().substring(0, 10);
+          purchaseHistory.push(purchase);
+        }
+
+        let status =
+          state.accountStatuses[
+            faker.number.int({ min: 0, max: state.accountStatuses.length - 1 })
+          ];
+
+        let customer = {
+          info: info,
+          status: status,
+          vehicles: vehicles,
+          purchaseHistory: purchaseHistory,
+        };
+
+        customers.push(customer);
+      }
+      state.generatedCustomers = customers;
+    },
   },
+
   getters: {
     getCount(state) {
       return state.count;
     },
     getCustomersAllInfo(state) {
-      return state.customers;
+      return state.generatedCustomers;
     },
     getCustomersBasicInfo(state) {
-      return state.customers.map((customer) => customer.info);
+      return state.generatedCustomers.map((customer) => customer.info);
     },
     getCustomerObject: (state) => (id) => {
-      return state.customers.find((customer) => customer.info.id === id);
+      return state.generatedCustomers.find(
+        (customer) => customer.info.id === id
+      );
     },
     getCustomerInfo: (state, getters) => (id) => {
       return getters.getCustomerObject(id);
