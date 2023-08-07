@@ -28,75 +28,91 @@
 
       <v-divider class="mb-4 mt-4" />
       <div v-for="(vehicle, index) in customerInfo.vehicles" :key="vehicle.id">
-        <!-- Edit Vehicle -->
-        <v-form
-          ref="editVehicleForm"
-          v-model="editVehicleFormValid"
-          v-if="editedVehicleIndex == index && editedVehicleIndex != null"
-        >
-          <div
-            sm="12"
-            v-for="(value, key, index) in editedVehicle"
-            :key="index"
+        <div v-if="!vehicle.is_deleted">
+          <!-- Edit Vehicle -->
+          <v-form
+            ref="editVehicleForm"
+            v-model="editVehicleFormValid"
+            v-if="editedVehicleIndex == index && editedVehicleIndex != null"
           >
-            <v-text-field
-              v-if="key != 'subscription'"
-              :value="value"
-              v-model="editedVehicle[key]"
-              :readonly="fieldDisabled(key)"
-              :rules="[required]"
+            <div
+              sm="12"
+              v-for="(value, key, index) in editedVehicle"
+              :key="index"
             >
-              <template v-slot:label>
-                <div class="info-label">{{ key }}</div>
-              </template>
-            </v-text-field>
-          </div>
+              <v-text-field
+                v-if="key != 'subscription' && key != 'is_deleted'"
+                :value="value"
+                v-model="editedVehicle[key]"
+                :readonly="fieldDisabled(key)"
+                :rules="[required]"
+              >
+                <template v-slot:label>
+                  <div class="info-label">{{ key }}</div>
+                </template>
+              </v-text-field>
+            </div>
 
-          <v-layout row align="center">
+            <v-layout row align="center">
+              <v-btn
+                @click="cancelEditVehicle"
+                elevation="0"
+                class="mr-2"
+                color="#f5f5f5"
+                >Cancel</v-btn
+              >
+              <v-btn
+                color="primary"
+                :disabled="!editVehicleFormValid"
+                @click="saveVehicle(index)"
+                elevation="0"
+                >Save</v-btn
+              >
+            </v-layout>
+          </v-form>
+
+          <v-layout row class="text-left" v-else>
+            <div>
+              <div class="text-h7">
+                {{ vehicle.color }} {{ vehicle.make }} {{ vehicle.model }}
+              </div>
+              <div class="text-caption font-weight-light">
+                {{ vehicle.year }}, {{ vehicle.licensePlate }}
+              </div>
+            </div>
+            <v-spacer />
             <v-btn
-              @click="cancelEditVehicle"
+              v-if="!showConfirmDeleteVehicle[index]"
+              flat
+              icon="mdi-pencil"
+              @click="editVehicle(index)"
+            ></v-btn>
+            <v-btn
+              v-if="!showConfirmDeleteVehicle[index]"
+              flat
+              icon="mdi-delete"
+              @click="showConfirmDeleteVehicle[index] = true"
+            ></v-btn>
+            <v-btn
+              v-if="showConfirmDeleteVehicle[index]"
               elevation="0"
-              class="mr-2"
-              color="#f5f5f5"
+              color="gray"
+              class="mr-2 mt-1 mb-2"
+              @click="showConfirmDeleteVehicle[index] = false"
               >Cancel</v-btn
             >
             <v-btn
-              color="primary"
-              :disabled="!editVehicleFormValid"
-              @click="saveVehicle(index)"
+              v-if="showConfirmDeleteVehicle[index]"
               elevation="0"
-              >Save</v-btn
+              color="red"
+              class="mt-1 mb-2"
+              @click="deleteVehicle(index)"
+              >Delete</v-btn
             >
           </v-layout>
-        </v-form>
 
-        <v-layout row class="text-left" v-else>
-          <div>
-            <div class="text-h7">
-              {{ vehicle.color }} {{ vehicle.make }} {{ vehicle.model }}
-            </div>
-            <div class="text-caption font-weight-light">
-              {{ vehicle.year }}, {{ vehicle.licensePlate }}
-            </div>
-          </div>
-          <v-spacer />
-          <v-btn flat icon="mdi-pencil" @click="editVehicle(index)"></v-btn>
-          <v-btn
-            v-if="!deleteVehicleConfirmArray[index] || false"
-            flat
-            icon="mdi-delete"
-            @click="deleteVehicleConfirmArray[index] = true"
-          ></v-btn>
-          <v-btn
-            v-if="false"
-            elevation="0"
-            color="purple"
-            @click="deleteVehicle(index)"
-            >Confirm Delete</v-btn
-          >
-        </v-layout>
-
-        <v-divider class="mt-4 mb-4" />
+          <v-divider class="mt-4 mb-4" />
+        </div>
       </div>
 
       <!-- Add Vehicle -->
@@ -129,7 +145,7 @@
           @click="cancelAddVehicle"
           elevation="0"
           class="mr-2"
-          color="#f5f5f5"
+          color="gray"
           v-show="addingVehicle"
           >Cancel</v-btn
         >
@@ -162,7 +178,7 @@
 
       <v-divider class="mb-4 mt-4" />
       <div v-for="(vehicle, index) in customerInfo.vehicles" :key="vehicle.id">
-        <div>
+        <div v-if="!vehicle.is_deleted">
           <div class="text-caption">Vehicle {{ vehicle.id }}</div>
           <div class="text-body1">
             {{ concatVehicleInfo(vehicle) }}
@@ -170,7 +186,13 @@
         </div>
         <v-spacer />
 
-        <v-layout row align="center" style="text-align: left" class="mt-2 mb-4">
+        <v-layout
+          row
+          align="center"
+          style="text-align: left"
+          class="mt-2 mb-4"
+          v-if="!vehicle.is_deleted"
+        >
           <v-select
             v-model="vehicle.subscription"
             :items="subscriptions"
@@ -248,7 +270,7 @@ export default {
       editVehicleFormValid: false,
       subscriptions: [],
       editedVehicle: {},
-      deleteVehicleConfirmArray: [],
+      showConfirmDeleteVehicle: [],
       editedVehicleIndex: null,
       addingVehicle: false,
       addedVehicle: {},
@@ -295,12 +317,15 @@ export default {
       );
     },
     addVehicle() {
-      this.$store.commit("addVehicle", JSON.stringify(this.addedVehicle));
       this.addingVehicle = false;
       this.customerInfo.vehicles.push(this.addedVehicle);
       this.addedVehicle = {};
     },
-    deleteVehicle() {},
+    deleteVehicle(index) {
+      console.log(index);
+      this.customerInfo.vehicles[index].is_deleted = true;
+      this.showConfirmDeleteVehicle[index] = false;
+    },
     cancelAddVehicle() {
       this.addingVehicle = false;
       this.addedVehicle = {};
