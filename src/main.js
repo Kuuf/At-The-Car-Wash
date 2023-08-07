@@ -205,4 +205,7 @@ app.use(store);
 
 registerPlugins(app);
 
+console.log("mounting app");
+
 app.mount("#app");
+console.log(app);
