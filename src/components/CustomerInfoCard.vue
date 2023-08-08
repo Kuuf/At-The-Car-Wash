@@ -28,6 +28,11 @@
       {{ customerInfo.address }}, {{ customerInfo.city }},
       {{ customerInfo.state }}
     </div>
+    <div v-if="customerInfo.canceled">
+      <v-chip color="red" text-color="white" class="mr-2 mt-3">
+        Canceled
+      </v-chip>
+    </div>
   </div>
 </template>
 

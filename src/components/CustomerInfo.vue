@@ -10,7 +10,7 @@
         <v-divider class="mb-4 mt-4" />
         <div v-for="(value, key) in customerInfo.info" :key="key">
           <v-text-field
-            v-if="key != 'id'"
+            v-if="key != 'id' && key != 'canceled'"
             :rules="required"
             :type="customerInfo.infoTypes[key]"
             :value="value"
@@ -312,7 +312,48 @@
           </div>
         </v-layout>
         <v-divider class="mb-4 mt-4" />
-        <v-btn>Cancel Account</v-btn>
+
+        <v-btn
+          v-if="showConfirmCancel"
+          @click="showConfirmCancel = false"
+          variant="outlined"
+          class="mr-2"
+          >Nevermind</v-btn
+        >
+        <v-btn
+          v-if="showConfirmCancel"
+          @click="confirmCancelAccount"
+          flat
+          variant="outlined"
+          color="red"
+          >Confirm Cancel Account</v-btn
+        >
+        <v-btn
+          v-else-if="
+            customerInfo && customerInfo.info && !customerInfo.info.canceled
+          "
+          variant="outlined"
+          color="red"
+          @click="showConfirmCancel = true"
+          >Cancel Account</v-btn
+        >
+        <div
+          class="text-body-2 mt-3"
+          v-if="
+            customerInfo && customerInfo.info && !customerInfo.info.canceled
+          "
+        >
+          Be absolutely sure you want to cancel this account. The customer will
+          immediately lose access to their subscription.
+        </div>
+        <div v-else>
+          <v-btn variant="outlined" color="green" @click="reactivateAccount"
+            >Reactivate Account</v-btn
+          >
+          <div class="text-body-2 mt-3">
+            Reactivating this account will restore the customer's subscription
+          </div>
+        </div>
       </div>
       <div style="height: 400px; width: 50px"></div>
     </v-form>
@@ -350,6 +391,7 @@ export default {
       addedVehicle: {},
       canSaveCustomerInfo: false,
       vehicleMenu: [],
+      showConfirmCancel: false,
       lorem:
         "Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod.",
     };
@@ -382,6 +424,7 @@ export default {
       this.editedVehicleIndex = null;
       this.addingVehicle = false;
       this.addedVehicle = {};
+      this.showConfirmCancel = false;
     },
     loadCustomerInfo() {
       this.customerInfo = JSON.parse(
@@ -491,6 +534,15 @@ export default {
 
       // Update the v-model with the formatted phone number
       this.customerInfo.phone = formattedNumber;
+    },
+    confirmCancelAccount() {
+      this.showConfirmCancel = false;
+      this.customerInfo.info.canceled = true;
+      this.$emit("accountCanceled");
+    },
+    reactivateAccount() {
+      this.customerInfo.info.canceled = false;
+      this.$emit("accountReactivated");
     },
   },
 

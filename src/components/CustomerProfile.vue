@@ -25,7 +25,20 @@
           {{ customerSelected && customerInfo ? customerInfo.info.id : "" }}
         </div>
       </div>
-
+      <div class="mb-5">
+        <div
+          v-if="customerInfo && customerInfo.info && customerInfo.info.canceled"
+        >
+          <v-chip color="red" text-color="white" class="mr-2">
+            Canceled
+          </v-chip>
+        </div>
+        <div v-else>
+          <v-chip color="green" text-color="white" class="mr-2">
+            Active
+          </v-chip>
+        </div>
+      </div>
       <v-spacer />
       <v-tooltip text="Save Profile" location="bottom">
         <template v-slot:activator="{ props }">
@@ -109,6 +122,8 @@
             :customerSelected="customerSelected"
             :customerID="customerID"
             @setCanSaveCustomerProfile="updateProfileCanSave"
+            @accountCanceled="customerInfo.info.canceled = true"
+            @accountReactivated="customerInfo.info.canceled = false"
           />
         </div>
       </v-col>

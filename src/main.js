@@ -97,9 +97,9 @@ const store = createStore({
       for (let i = 0; i < numCustomers; i++) {
         let numPurchases = faker.number.int({ min: 3, max: 10 });
         let numVehicles = faker.number.int({ min: 2, max: 3 });
-
         // Get customer info
         let info = {
+          canceled: Math.random() < 0.1,
           id: faker.number.int({ min: 1, max: 10000000 }),
           name: faker.person.fullName(),
           email: faker.internet.email(),
