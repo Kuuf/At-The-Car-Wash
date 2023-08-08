@@ -329,9 +329,7 @@
           >Confirm Cancel Account</v-btn
         >
         <v-btn
-          v-else-if="
-            customerInfo && customerInfo.info && !customerInfo.info.canceled
-          "
+          v-else-if="customerInfo && customerInfo.status == 'Active'"
           variant="outlined"
           color="red"
           @click="showConfirmCancel = true"
@@ -339,9 +337,7 @@
         >
         <div
           class="text-body-2 mt-3"
-          v-if="
-            customerInfo && customerInfo.info && !customerInfo.info.canceled
-          "
+          v-if="customerInfo && customerInfo.status == 'Active'"
         >
           Be absolutely sure you want to cancel this account. The customer will
           immediately lose access to their subscription.
@@ -537,11 +533,19 @@ export default {
     },
     confirmCancelAccount() {
       this.showConfirmCancel = false;
-      this.customerInfo.info.canceled = true;
+      this.customerInfo.status = "Canceled";
+      this.$store.commit(
+        "updateAccountStatus",
+        JSON.stringify({ id: this.customerInfo.info.id, status: "Canceled" })
+      );
       this.$emit("accountCanceled");
     },
     reactivateAccount() {
-      this.customerInfo.info.canceled = false;
+      this.customerInfo.status = "Active";
+      this.$store.commit(
+        "updateAccountStatus",
+        JSON.stringify({ id: this.customerInfo.info.id, status: "Active" })
+      );
       this.$emit("accountReactivated");
     },
   },

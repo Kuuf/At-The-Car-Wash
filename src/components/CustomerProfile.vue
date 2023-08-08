@@ -26,9 +26,12 @@
         </div>
       </div>
       <div class="mb-5">
-        <div
-          v-if="customerInfo && customerInfo.info && customerInfo.info.canceled"
-        >
+        <div v-if="customerInfo && customerInfo.status == 'Overdue'">
+          <v-chip color="orange" text-color="white" class="mr-2">
+            Overdue
+          </v-chip>
+        </div>
+        <div v-else-if="customerInfo && customerInfo.status == 'Canceled'">
           <v-chip color="red" text-color="white" class="mr-2">
             Canceled
           </v-chip>
@@ -122,8 +125,8 @@
             :customerSelected="customerSelected"
             :customerID="customerID"
             @setCanSaveCustomerProfile="updateProfileCanSave"
-            @accountCanceled="customerInfo.info.canceled = true"
-            @accountReactivated="customerInfo.info.canceled = false"
+            @accountCanceled="customerInfo.status = 'Canceled'"
+            @accountReactivated="customerInfo.status = 'Active'"
           />
         </div>
       </v-col>

@@ -42,20 +42,8 @@ const store = createStore({
           price: 6.99,
         },
       ],
-      accountStatuses: [
-        {
-          id: 1,
-          name: "Active",
-        },
-        {
-          id: 2,
-          name: "Cancelled",
-        },
-        {
-          id: 3,
-          name: "Overdue",
-        },
-      ],
+      accountStatuses: ["Canceled", "Overdue", "Active"],
+      accountStatusWeights: [0.8, 0.7, 0.0],
       purchases: [
         {
           id: 1,
@@ -89,6 +77,15 @@ const store = createStore({
         customer.purchaseHistory = updatedCustomer.purchaseHistory;
       }
     },
+    updateAccountStatus(state, payload) {
+      payload = JSON.parse(payload);
+      const customer = state.generatedCustomers.find(
+        (customer) => customer.info.id === payload.id
+      );
+      if (customer) {
+        customer.status = payload.status;
+      }
+    },
     generateCustomers(state) {
       console.log("generating customers");
       let numCustomers = 100;
@@ -99,7 +96,6 @@ const store = createStore({
         let numVehicles = faker.number.int({ min: 2, max: 3 });
         // Get customer info
         let info = {
-          canceled: Math.random() < 0.1,
           id: faker.number.int({ min: 1, max: 10000000 }),
           name: faker.person.fullName(),
           email: faker.internet.email(),
@@ -170,10 +166,17 @@ const store = createStore({
           purchaseHistory.push(purchase);
         }
 
-        let status =
-          state.accountStatuses[
-            faker.number.int({ min: 0, max: state.accountStatuses.length - 1 })
-          ];
+        //use status weights to determine status
+        let determiner = Math.random();
+        let status = "";
+        for (let i = 0; i < state.accountStatusWeights.length; i++) {
+          if (determiner > state.accountStatusWeights[i]) {
+            console.log(determiner);
+            status = state.accountStatuses[i];
+            console.log(status);
+            break;
+          }
+        }
 
         let customer = {
           info: info,
@@ -199,7 +202,16 @@ const store = createStore({
       return state.generatedCustomers;
     },
     getCustomersBasicInfo(state) {
-      return state.generatedCustomers.map((customer) => customer.info);
+      //return all generatedCustomers.info
+      //and each customers status
+      //combine them into a single dictionary
+      let customers = [];
+      state.generatedCustomers.forEach((customer) => {
+        let customerInfo = customer.info;
+        customerInfo.status = customer.status;
+        customers.push(customerInfo);
+      });
+      return customers;
     },
     getCustomerObject: (state) => (id) => {
       return state.generatedCustomers.find(

@@ -28,9 +28,14 @@
       {{ customerInfo.address }}, {{ customerInfo.city }},
       {{ customerInfo.state }}
     </div>
-    <div v-if="customerInfo.canceled">
+    <div v-if="customerInfo.status == 'Canceled'">
       <v-chip color="red" text-color="white" class="mr-2 mt-3">
         Canceled
+      </v-chip>
+    </div>
+    <div v-else-if="customerInfo.status == 'Overdue'">
+      <v-chip color="orange" text-color="white" class="mr-2 mt-3">
+        Overdue
       </v-chip>
     </div>
   </div>
