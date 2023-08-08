@@ -109,6 +109,16 @@ const store = createStore({
           state: faker.location.state(),
         };
 
+        let infoTypes = {
+          id: "number",
+          name: "string",
+          email: "string",
+          phone: "string",
+          address: "string",
+          city: "string",
+          state: "string",
+        };
+
         // Generate vehicles
         let vehicles = Array.from({ length: numVehicles }, () => ({
           id: faker.number.int({ min: 1, max: 10000000 }),
@@ -120,8 +130,25 @@ const store = createStore({
           year: 2015,
         }));
 
+        let vehicleInfoTypes = {
+          id: "number",
+          make: "string",
+          model: "string",
+          color: "string",
+          licensePlate: "string",
+          subscription: "number",
+          year: "number",
+        };
+
         // Generate purchase history
         let purchaseHistory = [];
+        let purchaseHistoryTypes = {
+          id: "number",
+          name: "string",
+          price: "number",
+          vehicle: "number",
+          date: "string",
+        };
         for (let k = 0; k < numPurchases; k++) {
           const randomVehicleIndex = faker.number.int({
             min: 0,
@@ -153,6 +180,9 @@ const store = createStore({
           status: status,
           vehicles: vehicles,
           purchaseHistory: purchaseHistory,
+          infoTypes: infoTypes,
+          vehicleInfoTypes: vehicleInfoTypes,
+          purchaseHistoryTypes: purchaseHistoryTypes,
         };
 
         customers.push(customer);

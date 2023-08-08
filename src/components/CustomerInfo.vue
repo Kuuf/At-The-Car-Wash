@@ -10,7 +10,9 @@
         <v-divider class="mb-4 mt-4" />
         <div v-for="(value, key) in customerInfo.info" :key="key">
           <v-text-field
-            :rules="[required]"
+            v-if="key != 'id'"
+            :rules="required"
+            :type="customerInfo.infoTypes[key]"
             :value="value"
             v-model="customerInfo.info[key]"
             :readonly="fieldDisabled(key)"
@@ -48,11 +50,14 @@
                 :key="index"
               >
                 <v-text-field
-                  v-if="key != 'subscription' && key != 'is_deleted'"
+                  v-if="
+                    key != 'subscription' && key != 'is_deleted' && key != 'id'
+                  "
                   :value="value"
+                  :type="customerInfo.vehicleInfoTypes[key]"
                   v-model="editedVehicle[key]"
                   :readonly="fieldDisabled(key)"
-                  :rules="[required]"
+                  :rules="required"
                 >
                   <template v-slot:label>
                     <div class="capitalize">{{ key }}</div>
@@ -137,8 +142,9 @@
               <v-text-field
                 v-if="key != 'subscription'"
                 :value="value"
+                :type="customerInfo.vehicleInfoTypes[key]"
                 v-model="addedVehicle[key]"
-                :rules="[required]"
+                :rules="required"
                 :readonly="fieldDisabled(key)"
               >
                 <template v-slot:label>
@@ -326,15 +332,20 @@ export default {
   },
   computed: {
     ...mapGetters(["getCustomerInfo"]),
+    required() {
+      const rules = [];
+
+      //form empty rule
+      rules.push((v) => (!!v && v.trim() != "") || "Required");
+
+      return rules;
+    },
   },
   created() {},
   mounted() {
     // Execute code after the component is mounted
   },
   methods: {
-    required(v) {
-      return !!v || "Field is required";
-    },
     load() {
       this.resetInfo();
       this.loadCustomerInfo();
@@ -434,6 +445,27 @@ export default {
       return this.customerInfo.vehicles.filter(
         (vehicle) => vehicle.id !== this.customerInfo.vehicles[index].id
       );
+    },
+    formatPhoneNumber() {
+      // Remove any non-digit characters from the input using a regular expression
+      let cleanedNumber = this.phoneNumber.replace(/\D/g, "");
+
+      // Check if the number is greater than 10 digits and trim it to the first 10 digits
+      if (cleanedNumber.length > 10) {
+        cleanedNumber = cleanedNumber.substr(0, 10);
+      }
+
+      // Format the number in the "xxx-xxx-xxxx" format
+      let formattedNumber = "";
+      for (let i = 0; i < cleanedNumber.length; i++) {
+        if (i === 3 || i === 6) {
+          formattedNumber += "-";
+        }
+        formattedNumber += cleanedNumber[i];
+      }
+
+      // Update the v-model with the formatted phone number
+      this.customerInfo.phone = formattedNumber;
     },
   },
 
