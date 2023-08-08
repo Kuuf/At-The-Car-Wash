@@ -26,9 +26,14 @@
           @toggleFullScreen="toggleCustomerInfoFullScreen"
           @updatedCustomerInfo="updatedCustomerInfo"
         />
-        <div v-show="!isCustomerSelected">
-          <v-img src="@/assets/no_customer_selected.png"> </v-img>
-        </div>
+        <v-col v-show="!isCustomerSelected" class="noCustomerDiv">
+          <div class="noCustomerContent pb-5">
+            <v-img src="@/assets/city_life.svg"> </v-img>
+            <v-row class="text-h5 mt-5" style="height: 100%" justify="center">
+              <span style="color: #ccc">Your customers are lonely ...</span>
+            </v-row>
+          </div>
+        </v-col>
       </v-col>
     </v-row>
   </v-container>
@@ -119,5 +124,15 @@ export default {
 <style>
 .full-height {
   height: calc(100vh - 64px);
+}
+.noCustomerDiv {
+  display: flex;
+  height: 100%;
+}
+
+.noCustomerContent {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 </style>
