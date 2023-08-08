@@ -71,7 +71,7 @@
       <v-tooltip
         :text="fullscreen ? 'Exit Fullscreen' : 'Fullscreen'"
         location="bottom"
-        v-show="customerSelected && !isMobile"
+        v-if="customerSelected && !isMobile"
       >
         <template v-slot:activator="{ props }">
           <v-btn
@@ -286,7 +286,7 @@ export default {
     },
     isScrolledIntoView(el) {
       var rect = el.getBoundingClientRect();
-      return rect.top < 300;
+      return rect.top < 400;
     },
   },
 
