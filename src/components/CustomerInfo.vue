@@ -94,18 +94,28 @@
                 </div>
               </div>
               <v-spacer />
-              <v-btn
-                v-if="!showConfirmDeleteVehicle[index]"
-                flat
-                icon="mdi-pencil"
-                @click="editVehicle(index)"
-              ></v-btn>
-              <v-btn
-                v-if="!showConfirmDeleteVehicle[index]"
-                flat
-                icon="mdi-delete"
-                @click="showConfirmDeleteVehicle[index] = true"
-              ></v-btn>
+              <v-tooltip text="Edit Vehicle" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    v-if="!showConfirmDeleteVehicle[index]"
+                    flat
+                    icon="mdi-pencil"
+                    @click="editVehicle(index)"
+                  ></v-btn>
+                </template>
+              </v-tooltip>
+              <v-tooltip text="Delete Vehicle" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    v-if="!showConfirmDeleteVehicle[index]"
+                    flat
+                    icon="mdi-delete"
+                    @click="showConfirmDeleteVehicle[index] = true"
+                  ></v-btn>
+                </template>
+              </v-tooltip>
               <v-btn
                 v-if="showConfirmDeleteVehicle[index]"
                 elevation="0"
@@ -220,14 +230,19 @@
               item-value="id"
             />
             <v-menu v-if="vehicle.subscription != null">
-              <template v-slot:activator="{ props }">
-                <v-btn
-                  v-bind="props"
-                  flat
-                  icon="mdi-file-move-outline"
-                  class="ml-2 mt-1"
-                >
-                </v-btn>
+              <template v-slot:activator="{ props: menu }">
+                <v-tooltip location="top">
+                  <template v-slot:activator="{ props: tooltip }">
+                    <v-btn
+                      v-bind="mergeProps(menu, tooltip)"
+                      flat
+                      icon="mdi-file-move-outline"
+                      class="ml-2 mt-1"
+                    >
+                    </v-btn>
+                  </template>
+                  <span>Transfer Subscription</span>
+                </v-tooltip>
               </template>
               <v-list>
                 <v-list-item>
@@ -249,13 +264,21 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-            <v-btn
-              flat
-              class="mt-1"
-              icon="mdi-delete"
-              v-show="vehicle.subscription != null"
-              @click="removeSubscription(index)"
-            />
+            <v-tooltip
+              text="Remove Subscription"
+              location="top"
+              v-if="vehicle.subscription != null"
+            >
+              <template v-slot:activator="{ props }">
+                <v-btn
+                  v-bind="props"
+                  flat
+                  class="mt-1"
+                  icon="mdi-delete"
+                  @click="removeSubscription(index)"
+                />
+              </template>
+            </v-tooltip>
           </v-layout>
         </div>
 
@@ -299,6 +322,7 @@
 <script>
 import functions from "@/helpers/functions";
 import { mapGetters } from "vuex";
+import { mergeProps } from "vue";
 // import store from "@/store";
 
 export default {
@@ -346,6 +370,7 @@ export default {
     // Execute code after the component is mounted
   },
   methods: {
+    mergeProps,
     load() {
       this.resetInfo();
       this.loadCustomerInfo();

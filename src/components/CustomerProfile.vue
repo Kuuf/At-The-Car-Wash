@@ -36,20 +36,32 @@
       >
         Save Changes</v-btn
       >
-      <v-btn
+
+      <v-tooltip
+        :text="fullscreen ? 'Exit Fullscreen' : 'Fullscreen'"
+        location="bottom"
         v-show="customerSelected && !isMobile"
-        flat
-        :icon="fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'"
-        @click="toggleFullScreen()"
       >
-      </v-btn>
-      <v-btn
+        <template v-slot:activator="{ props }">
+          <v-btn
+            v-bind="props"
+            flat
+            :icon="fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'"
+            @click="toggleFullScreen()"
+          >
+          </v-btn>
+        </template>
+      </v-tooltip>
+      <v-tooltip
+        text="Close Profile"
+        location="bottom"
         v-show="customerSelected && !isMobile && !fullscreen"
-        flat
-        icon="mdi-close"
-        @click="goBack()"
       >
-      </v-btn>
+        <template v-slot:activator="{ props }">
+          <v-btn v-bind="props" flat icon="mdi-close" @click="goBack()">
+          </v-btn>
+        </template>
+      </v-tooltip>
     </v-row>
     <!-- info bOIII -->
     <!--

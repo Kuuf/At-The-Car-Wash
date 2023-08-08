@@ -5,7 +5,9 @@
     </template>
     <v-app-bar-title> {{ currentModule }}</v-app-bar-title>
     <v-spacer />
+    <!--
     <v-btn icon="mdi-account-search-outline" color="primary"> </v-btn>
+    -->
   </v-app-bar>
 </template>
 
