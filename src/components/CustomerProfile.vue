@@ -27,15 +27,30 @@
       </div>
 
       <v-spacer />
-      <v-btn
-        flat
-        color="primary"
-        class="mr-2"
-        @click="updateProfile"
-        :disabled="!canSaveProfile"
-      >
-        Save Changes</v-btn
-      >
+      <v-tooltip text="Save Profile" location="bottom">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            v-if="profilePageGoMobile"
+            color="primary"
+            flat
+            icon="mdi-content-save"
+            v-bind="props"
+            class="mr-2"
+            @click="updateProfile"
+            :disabled="!canSaveProfile"
+          />
+          <v-btn
+            v-else
+            color="primary"
+            flat
+            v-bind="props"
+            class="mr-2"
+            @click="updateProfile"
+            :disabled="!canSaveProfile"
+            >Save Profile</v-btn
+          >
+        </template>
+      </v-tooltip>
 
       <v-tooltip
         :text="fullscreen ? 'Exit Fullscreen' : 'Fullscreen'"
