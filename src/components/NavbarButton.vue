@@ -4,7 +4,7 @@
       'text-none text-subtitle-1 navbar-button',
       isSelected
         ? 'secondary-left-border gray-background'
-        : ' blank-left-border',
+        : 'blank-left-border',
     ]"
     flat
     :prepend-icon="icon"
