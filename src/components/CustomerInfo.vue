@@ -140,7 +140,7 @@
           <v-form ref="addVehicleForm" v-model="addVehicleFormValid">
             <div v-for="(value, key, index) in addedVehicle" :key="index">
               <v-text-field
-                v-if="key != 'subscription'"
+                v-if="key != 'subscription' && key != 'id'"
                 :value="value"
                 :type="customerInfo.vehicleInfoTypes[key]"
                 v-model="addedVehicle[key]"
