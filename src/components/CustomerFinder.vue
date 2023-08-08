@@ -1,5 +1,5 @@
 <template>
-  <div class="white-container">
+  <div class="white-container" style="min-height: 90vh">
     <div class="pa-3 primary-background">
       <v-row no-gutters>
         <v-col sm="6">
