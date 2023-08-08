@@ -213,6 +213,36 @@
               item-title="name"
               item-value="id"
             />
+            <v-menu v-if="vehicle.subscription != null">
+              <template v-slot:activator="{ props }">
+                <v-btn
+                  v-bind="props"
+                  flat
+                  icon="mdi-file-move-outline"
+                  class="ml-2 mt-1"
+                >
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title class="text-body" style="color: #b1b1b1"
+                    >Transfer subscription to:
+                  </v-list-item-title>
+                </v-list-item>
+                <v-list-item
+                  v-for="(
+                    vehicle, transferToIndex
+                  ) in getVehiclesCanTransferSubscriptionTo(index)"
+                  :v-show="index != transferToIndex"
+                  :key="transferToIndex"
+                  @click="transferSubscription(index, vehicle.id)"
+                >
+                  <v-list-item-title class="capitalize"
+                    >{{ vehicle.color }} {{ vehicle.make }} {{ vehicle.model }}
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
             <v-btn
               flat
               class="mt-1"
@@ -289,6 +319,7 @@ export default {
       addingVehicle: false,
       addedVehicle: {},
       canSaveCustomerInfo: false,
+      vehicleMenu: [],
       lorem:
         "Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipi sicing elit. Quisquam, quod.",
     };
@@ -356,6 +387,15 @@ export default {
     removeSubscription(index) {
       this.customerInfo.vehicles[index].subscription = null;
     },
+    transferSubscription(index, vehicleID) {
+      let transferToIndex = this.customerInfo.vehicles.findIndex(
+        (vehicle) => vehicle.id === vehicleID
+      );
+      this.customerInfo.vehicles[transferToIndex].subscription = JSON.parse(
+        JSON.stringify(this.customerInfo.vehicles[index].subscription)
+      );
+      this.customerInfo.vehicles[index].subscription = null;
+    },
     editVehicle(index) {
       this.editedVehicle = { ...this.customerInfo.vehicles[index] };
       this.editedVehicleIndex = index;
@@ -389,6 +429,11 @@ export default {
         subscription: null,
       };
       this.$refs.addVehicleForm.validate();
+    },
+    getVehiclesCanTransferSubscriptionTo(index) {
+      return this.customerInfo.vehicles.filter(
+        (vehicle) => vehicle.id !== this.customerInfo.vehicles[index].id
+      );
     },
   },
 

@@ -95,8 +95,8 @@ const store = createStore({
       let customers = [];
 
       for (let i = 0; i < numCustomers; i++) {
-        let numPurchases = faker.number.int({ min: 1, max: 10 });
-        let numVehicles = faker.number.int({ min: 1, max: 3 });
+        let numPurchases = faker.number.int({ min: 3, max: 10 });
+        let numVehicles = faker.number.int({ min: 2, max: 3 });
 
         // Get customer info
         let info = {
