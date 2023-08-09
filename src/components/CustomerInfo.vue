@@ -105,13 +105,16 @@
                   ></v-btn>
                 </template>
               </v-tooltip>
-              <v-tooltip text="Delete Vehicle" location="top">
+              <v-tooltip
+                text="Delete Vehicle"
+                location="top"
+                v-if="!showConfirmDeleteVehicle[index]"
+              >
                 <template v-slot:activator="{ props }">
                   <v-btn
                     v-bind="props"
-                    v-if="!showConfirmDeleteVehicle[index]"
-                    flat
                     icon="mdi-delete"
+                    flat
                     @click="showConfirmDeleteVehicle[index] = true"
                   ></v-btn>
                 </template>
@@ -127,6 +130,7 @@
               <v-btn
                 v-if="showConfirmDeleteVehicle[index]"
                 elevation="0"
+                variant="outlined"
                 color="red"
                 class="mt-1 mb-2"
                 @click="deleteVehicle(index)"

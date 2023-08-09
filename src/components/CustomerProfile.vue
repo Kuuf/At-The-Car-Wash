@@ -17,9 +17,26 @@
       :class="['overflow-scroll pb-0 pa-6', isMobile ? 'pt-0' : '']"
     >
       <div class="pa-3">
-        <div class="text-h5">
-          {{ customerSelected && customerInfo ? customerInfo.info.name : "" }}
-        </div>
+        <v-tooltip
+          :text="customerSelected && customerInfo ? customerInfo.info.name : ''"
+          location="top"
+        >
+          <template v-slot:activator="{ props }">
+            <div
+              v-bind="props"
+              :class="[
+                'text-h5',
+                isMobile
+                  ? 'overflow-ellipsis-small'
+                  : 'overflow-ellipsis-large',
+              ]"
+            >
+              {{
+                customerSelected && customerInfo ? customerInfo.info.name : ""
+              }}
+            </div>
+          </template>
+        </v-tooltip>
         <div class="text-caption">
           Customer ID:
           {{ customerSelected && customerInfo ? customerInfo.info.id : "" }}
@@ -103,7 +120,7 @@
       <v-tooltip
         text="Close Profile"
         location="bottom"
-        v-show="customerSelected && !isMobile && !fullscreen"
+        v-if="customerSelected && !isMobile && !fullscreen"
       >
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props" flat icon="mdi-close" @click="goBack()">
