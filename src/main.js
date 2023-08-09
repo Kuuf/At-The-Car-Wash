@@ -87,7 +87,6 @@ const store = createStore({
       }
     },
     generateCustomers(state) {
-      console.log("generating customers");
       let numCustomers = 100;
       let customers = [];
 
@@ -171,9 +170,7 @@ const store = createStore({
         let status = "";
         for (let i = 0; i < state.accountStatusWeights.length; i++) {
           if (determiner > state.accountStatusWeights[i]) {
-            console.log(determiner);
             status = state.accountStatuses[i];
-            console.log(status);
             break;
           }
         }

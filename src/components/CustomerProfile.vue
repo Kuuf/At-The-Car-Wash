@@ -215,9 +215,6 @@ export default {
     },
     updateProfile() {
       this.$refs["customerInfo"].updateCustomerInfo();
-      //send updatedCustomerInfo to store to the editCustomerInfo mutation
-      //console.log(updatedCustomerInfo);
-      //this.$store.commit("editCustomerInfo", updatedCustomerInfo);
       this.$emit("updatedCustomerInfo");
       this.showSavedButton = true;
       setTimeout(() => {
@@ -267,7 +264,6 @@ export default {
     navigateToProfileHeader(headerIndex) {
       this.autoScrolling = true;
       this.$nextTick(() => {
-        console.log(headerIndex);
         let profileSections =
           document.getElementsByClassName("profile-section");
         let customerInfoWindow =

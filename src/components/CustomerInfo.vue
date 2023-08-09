@@ -439,7 +439,6 @@ export default {
       return key === "id" || key === "subscription";
     },
     updateCustomerInfo() {
-      console.log(this.customerInfo);
       this.$store.commit("editCustomer", JSON.stringify(this.customerInfo));
     },
     concatVehicleInfo(vehicle) {
@@ -456,7 +455,6 @@ export default {
       this.addedVehicle = {};
     },
     deleteVehicle(index) {
-      console.log(index);
       this.customerInfo.vehicles[index].is_deleted = true;
       this.showConfirmDeleteVehicle[index] = false;
     },
@@ -492,8 +490,6 @@ export default {
       this.editedVehicleIndex = null;
     },
     getVehicleFromID(id) {
-      console.log(id);
-      console.log(this.customerInfo.vehicles);
       return this.customerInfo.vehicles.find((vehicle) => vehicle.id === id);
     },
     clickAddVehicle() {
