@@ -43,7 +43,7 @@
         </div>
       </div>
       <v-spacer />
-      <v-tooltip text="Save Profile" location="bottom">
+      <v-tooltip text="Save Profile" location="bottom" v-if="!showSavedButton">
         <template v-slot:activator="{ props }">
           <v-btn
             v-if="profilePageGoMobile"
@@ -65,6 +65,20 @@
             :disabled="!canSaveProfile"
             >Save Profile</v-btn
           >
+        </template>
+      </v-tooltip>
+      <v-tooltip text="Profile Saved" location="bottom" v-else>
+        <template v-slot:activator="{ props }">
+          <v-btn
+            v-bind="props"
+            style="color: #7cb82f"
+            class="mr-2"
+            color="green"
+            variant="outlined"
+          >
+            <v-icon color="green" class="mr-1">mdi-check</v-icon>
+            Profile Saved
+          </v-btn>
         </template>
       </v-tooltip>
 
@@ -168,6 +182,7 @@ export default {
       canSaveProfile: true,
       profilePageGoMobile: false,
       profilePageMobileThreshold: 960,
+      showSavedButton: false,
     };
   },
   computed: {
@@ -200,6 +215,10 @@ export default {
       //console.log(updatedCustomerInfo);
       //this.$store.commit("editCustomerInfo", updatedCustomerInfo);
       this.$emit("updatedCustomerInfo");
+      this.showSavedButton = true;
+      setTimeout(() => {
+        this.showSavedButton = false;
+      }, 2000);
     },
     accountStatusChanged(status) {
       this.customerInfo.status = status;
