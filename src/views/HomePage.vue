@@ -25,6 +25,7 @@
           @closeCustomerProfile="closeCustomerProfile"
           @toggleFullScreen="toggleCustomerInfoFullScreen"
           @updatedCustomerInfo="updatedCustomerInfo"
+          @accountStatusChanged="accountStatusChanged"
         />
         <v-col v-show="!isCustomerSelected" class="noCustomerDiv">
           <div class="noCustomerContent pb-5">
@@ -115,6 +116,9 @@ export default {
       this.customerInfoFullScreen = !this.customerInfoFullScreen;
     },
     updatedCustomerInfo() {
+      this.$refs.customerFinder.loadTable();
+    },
+    accountStatusChanged(status) {
       this.$refs.customerFinder.loadTable();
     },
   },

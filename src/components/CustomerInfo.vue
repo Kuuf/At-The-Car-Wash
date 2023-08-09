@@ -538,7 +538,7 @@ export default {
         "updateAccountStatus",
         JSON.stringify({ id: this.customerInfo.info.id, status: "Canceled" })
       );
-      this.$emit("accountCanceled");
+      this.$emit("accountStatusChanged", "Canceled");
     },
     reactivateAccount() {
       this.customerInfo.status = "Active";
@@ -546,7 +546,7 @@ export default {
         "updateAccountStatus",
         JSON.stringify({ id: this.customerInfo.info.id, status: "Active" })
       );
-      this.$emit("accountReactivated");
+      this.$emit("accountStatusChanged", "Active");
     },
   },
 

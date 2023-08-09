@@ -125,8 +125,7 @@
             :customerSelected="customerSelected"
             :customerID="customerID"
             @setCanSaveCustomerProfile="updateProfileCanSave"
-            @accountCanceled="customerInfo.status = 'Canceled'"
-            @accountReactivated="customerInfo.status = 'Active'"
+            @accountStatusChanged="accountStatusChanged"
           />
         </div>
       </v-col>
@@ -201,6 +200,10 @@ export default {
       //console.log(updatedCustomerInfo);
       //this.$store.commit("editCustomerInfo", updatedCustomerInfo);
       this.$emit("updatedCustomerInfo");
+    },
+    accountStatusChanged(status) {
+      this.customerInfo.status = status;
+      this.$emit("accountStatusChanged", status);
     },
     goBack() {
       if (this.fullscreen) {
