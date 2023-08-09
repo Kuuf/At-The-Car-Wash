@@ -108,9 +108,11 @@ export default {
     },
     updatedCustomerInfo() {
       this.$refs.customerFinder.loadTable();
+      this.$refs.customerFinder.searchCustomers();
     },
     accountStatusChanged(status) {
       this.$refs.customerFinder.loadTable();
+      this.$refs.customerFinder.searchCustomers();
     },
   },
 };
