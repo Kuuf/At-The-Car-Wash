@@ -3,7 +3,7 @@
     <v-row no-gutters>
       <v-col
         v-show="showCustomerList"
-        :sm="isCustomerSelected ? 4 : 6"
+        :sm="isCustomerSelected ? 4 : 12"
         class="simple-border-container white-container"
       >
         <CustomerFinder
@@ -13,7 +13,7 @@
         />
       </v-col>
       <v-col
-        v-show="showCustomerProfile"
+        v-show="isCustomerSelected"
         :sm="customerInfoFullScreen ? 12 : isCustomerSelected ? 8 : 6"
         class="simple-border-container white-container"
       >
@@ -27,14 +27,6 @@
           @updatedCustomerInfo="updatedCustomerInfo"
           @accountStatusChanged="accountStatusChanged"
         />
-        <v-col v-show="!isCustomerSelected" class="noCustomerDiv">
-          <div class="noCustomerContent pb-5">
-            <v-img src="@/assets/city_life.svg"> </v-img>
-            <v-row class="text-h5 mt-5" style="height: 100%" justify="center">
-              <span style="color: #ccc">Your customers are lonely ...</span>
-            </v-row>
-          </div>
-        </v-col>
       </v-col>
     </v-row>
   </v-container>

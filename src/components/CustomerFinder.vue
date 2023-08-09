@@ -2,7 +2,7 @@
   <div class="white-container" style="min-height: 90vh">
     <div class="pa-3 primary-background">
       <v-row no-gutters>
-        <v-col sm="6">
+        <v-col :sm="selectedCustomerID ? 6 : 3">
           <v-text-field
             v-model="search"
             placeholder="Search"
@@ -15,7 +15,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col sm="6">
+        <v-col :sm="selectedCustomerID ? 6 : 3">
           <v-select
             v-model="searchBy"
             variant="outlined"
