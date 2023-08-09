@@ -326,6 +326,7 @@
           flat
           variant="outlined"
           color="red"
+          :class="['mr-2', isMobile ? 'mt-2' : '']"
           >Confirm Cancel Account</v-btn
         >
         <v-btn
@@ -369,6 +370,10 @@ export default {
       required: false,
     },
     customerSelected: {
+      type: Boolean,
+      required: true,
+    },
+    isMobile: {
       type: Boolean,
       required: true,
     },

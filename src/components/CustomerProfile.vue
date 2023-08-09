@@ -70,6 +70,7 @@
       <v-tooltip text="Profile Saved" location="bottom" v-else>
         <template v-slot:activator="{ props }">
           <v-btn
+            v-if="!profilePageGoMobile"
             v-bind="props"
             style="color: #7cb82f"
             class="mr-2"
@@ -77,7 +78,9 @@
             variant="outlined"
           >
             <v-icon color="green" class="mr-1">mdi-check</v-icon>
-            Profile Saved
+            <div>Profile Saved</div>
+          </v-btn>
+          <v-btn icon="mdi-check" class="mr-2" v-else flat color="green">
           </v-btn>
         </template>
       </v-tooltip>
@@ -138,6 +141,7 @@
             ref="customerInfo"
             :customerSelected="customerSelected"
             :customerID="customerID"
+            :isMobile="isMobile"
             @setCanSaveCustomerProfile="updateProfileCanSave"
             @accountStatusChanged="accountStatusChanged"
           />

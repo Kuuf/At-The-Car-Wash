@@ -22,7 +22,9 @@
       </div>
     </v-layout>
 
-    <div class="text-body-2 font-weight-light">{{ customerInfo.email }}</div>
+    <div class="text-body-2 font-weight-light" style="overflow: wrap">
+      {{ customerInfo.email }}
+    </div>
     <div class="text-caption font-weight-light">{{ customerInfo.phone }}</div>
     <div class="text-caption font-weight-light">
       {{ customerInfo.address }}, {{ customerInfo.city }},
