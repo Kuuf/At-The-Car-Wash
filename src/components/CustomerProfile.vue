@@ -217,6 +217,7 @@ export default {
       this.$refs["customerInfo"].updateCustomerInfo();
       this.$emit("updatedCustomerInfo");
       this.showSavedButton = true;
+
       setTimeout(() => {
         this.showSavedButton = false;
       }, 2000);

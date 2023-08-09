@@ -1,7 +1,7 @@
 <template>
   <v-app-bar class="grey-bottom-border" flat>
     <template v-slot:prepend>
-      <v-img src="@/assets/sunny_cup.png" height="40" width="40"> </v-img>
+      <v-img src="@/assets/AMP.png" width="80" class="ml-1"> </v-img>
     </template>
     <v-app-bar-title> {{ currentModule }}</v-app-bar-title>
     <v-spacer />
@@ -15,7 +15,7 @@
 export default {
   data() {
     return {
-      currentModule: "Customer Dashboard",
+      currentModule: "CSP Dashboard",
     };
   },
   methods: {

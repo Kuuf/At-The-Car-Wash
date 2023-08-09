@@ -18,7 +18,6 @@
         class="simple-border-container white-container"
       >
         <CustomerProfile
-          v-show="isCustomerSelected"
           :customerSelected="isCustomerSelected"
           :customerID="selectedCustomerID"
           :isMobile="isMobile"
