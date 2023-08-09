@@ -15,7 +15,7 @@
 export default {
   data() {
     return {
-      currentModule: "CSP Dashboard",
+      currentModule: "CSR Dashboard",
     };
   },
   methods: {
