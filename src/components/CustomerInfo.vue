@@ -10,7 +10,7 @@
         <v-divider class="mb-4 mt-4" />
         <div v-for="(value, key) in customerInfo.info" :key="key">
           <v-text-field
-            v-if="key != 'id' && key != 'canceled'"
+            v-if="key != 'id' && key != 'status'"
             :rules="required"
             :type="customerInfo.infoTypes[key]"
             :value="value"
@@ -56,7 +56,6 @@
                   :value="value"
                   :type="customerInfo.vehicleInfoTypes[key]"
                   v-model="editedVehicle[key]"
-                  :readonly="fieldDisabled(key)"
                   :rules="required"
                 >
                   <template v-slot:label>
@@ -405,7 +404,11 @@ export default {
     ...mapGetters(["getCustomerInfo"]),
     required() {
       const rules = [];
-
+      //if v is not a string, just ensure it is not null
+      if (typeof v !== "string") {
+        rules.push((v) => !!v || "Required");
+        return rules;
+      }
       //form empty rule
       rules.push((v) => (!!v && v.trim() != "") || "Required");
 
