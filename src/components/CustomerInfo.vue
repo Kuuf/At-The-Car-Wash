@@ -33,6 +33,9 @@
         </v-layout>
 
         <v-divider class="mb-4 mt-4" />
+        <div v-if="!customerHasVisibleVehicles" class="text-body-2">
+          Customer has no vehicles
+        </div>
         <div
           v-for="(vehicle, index) in customerInfo.vehicles"
           :key="vehicle.id"
@@ -284,7 +287,9 @@
             </v-tooltip>
           </v-layout>
         </div>
-
+        <div v-if="!customerHasVisibleVehicles" class="text-body-2">
+          Customer has no subscriptions
+        </div>
         <!-- Purchase History -->
 
         <v-layout row align="center">
@@ -413,6 +418,14 @@ export default {
       rules.push((v) => (!!v && v.trim() != "") || "Required");
 
       return rules;
+    },
+    customerHasVisibleVehicles() {
+      return (
+        this.customerInfo &&
+        this.customerInfo.vehicles &&
+        this.customerInfo.vehicles.filter((vehicle) => !vehicle.is_deleted)
+          .length > 0
+      );
     },
   },
   created() {},
